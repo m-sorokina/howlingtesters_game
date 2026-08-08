@@ -1,14 +1,16 @@
+import 'dotenv/config';
 import { defineConfig, devices } from '@playwright/test';
+import { env } from './src/config/env';
 
 export default defineConfig({
   testDir: './tests',
-  fullyParallel: true,
+  fullyParallel: false,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  retries: process.env.CI ? 0 : 0,
+  workers: process.env.CI ? 1 : 1,
+  reporter: [['list'], ['html', { open: 'never' }]],
   use: {
-    baseURL: process.env.BASE_URL || 'http://localhost:3000',
+    baseURL: env.baseURL,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
   },
