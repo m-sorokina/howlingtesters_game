@@ -11,9 +11,7 @@ export class CreateTeam extends BasePage {
 
   constructor(page: Page) {
     super(page);
-    this.createCharacterForm = new CreateCharacterComponent(
-      this.page.locator('#character-creator'),
-    );
+    this.createCharacterForm = new CreateCharacterComponent(this.page.locator('#character-creator'));
     this.messagePopup = new MessagePopupComponent(this.page.locator('#popup'));
   }
 
@@ -46,7 +44,7 @@ export class CreateTeam extends BasePage {
     return new CharacterComponent(this.createdCharacterCards, characterToCreate.name);
   }
 
-  getSpecificCharacterCard(name: string): CharacterComponent {
+  getSpecifiedCharacterCard(name: string): CharacterComponent {
     return new CharacterComponent(this.createdCharacterCards, name);
   }
 }

@@ -5,10 +5,7 @@ export class BaseComponent {
     this.locator = locator;
   }
 
-  async waitFor(options?: {
-    state?: 'attached' | 'detached' | 'visible' | 'hidden';
-    timeout?: number;
-  }): Promise<void> {
+  async waitFor(options?: { state?: 'attached' | 'detached' | 'visible' | 'hidden'; timeout?: number }): Promise<void> {
     await this.locator.waitFor({ state: 'visible', ...options });
   }
 }

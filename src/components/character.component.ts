@@ -3,11 +3,7 @@ import type { Locator } from '@playwright/test';
 
 export class CharacterComponent extends BaseComponent {
   constructor(locator: Locator, name: string) {
-    super(
-      locator
-        .locator('.details')
-        .filter({ has: locator.page().getByRole('heading', { name, exact: true }) }),
-    );
+    super(locator.locator('.details').filter({ has: locator.page().getByRole('heading', { name, exact: true }) }));
   }
 
   get removeButton(): Locator {

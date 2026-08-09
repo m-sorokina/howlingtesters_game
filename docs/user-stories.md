@@ -26,7 +26,7 @@ This document contains user stories for the Character Creator application.
 - [x] **@points-to-spend** - verify points value
 - [x] **@4-characters** - verify 4 characters creation
 
-- [ ] **5 test** - page rendering before/after creation
+- [ ] **@page-render** - page rendering before/after creation
 
 ## User Story #2: Displaying the character list
 
@@ -36,9 +36,9 @@ This document contains user stories for the Character Creator application.
 
 ### Acceptance criteria:
 
-- [ ] I should see a list of all created characters
-- [ ] Each character should display: name, race, class and stats
-- [ ] The list should be updated after a new character is added
+- [x] I should see a list of all created characters
+- [x] Each character should display: name, race, class and stats
+- [x] The list should be updated after a new character is added
 
 ## User Story #3: Removing a character
 
