@@ -1,8 +1,8 @@
-import { STAT_KEYS, RACES, CLASSES, STAT_POINTS, MAX_CHARACTERS } from '@/consts/const';
-import { test, expect } from '@/fixtures/base';
-import { Character } from '@/models';
-import { distributePoints } from '@/helpers/distribute-points';
-import type { CharacterComponent } from '@/components/character.component';
+import { STAT_KEYS, RACES, CLASSES, STAT_POINTS, MAX_CHARACTERS } from '@consts/const';
+import { test, expect } from '@fixtures/base';
+import { Character } from '@models';
+import { distributePoints } from '@helpers/distribute-points';
+import type { CharacterComponent } from '@components/character.component';
 import textAssertions from '@data/textAssertions.json';
 
 const { createTeamPage } = textAssertions;

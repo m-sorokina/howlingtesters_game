@@ -1,5 +1,5 @@
 import { test as base } from '@playwright/test';
-import { CreateTeam } from '@/pages';
+import { CreateTeam } from '@pages';
 
 type Fixtures = {
   createPage: CreateTeam;

@@ -1,4 +1,4 @@
-import { RACES, CLASSES, STAT_KEYS } from '@/consts/const';
+import { RACES, CLASSES, STAT_KEYS } from '@consts/const';
 export type Race = (typeof RACES)[number];
 
 export type Class = (typeof CLASSES)[number];

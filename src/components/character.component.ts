@@ -1,4 +1,4 @@
-import { BaseComponent } from '@/components';
+import { BaseComponent } from '@components';
 import type { Locator } from '@playwright/test';
 
 export class CharacterComponent extends BaseComponent {

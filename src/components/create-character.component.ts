@@ -1,7 +1,7 @@
 import type { Locator } from '@playwright/test';
-import { BaseComponent } from '@/components';
-import type { Race, Class, Stats, CharacterType } from '@/types';
-import { STAT_KEYS } from '@/consts/const';
+import { BaseComponent } from '@components';
+import type { Race, Class, Stats, CharacterType } from '@types';
+import { STAT_KEYS } from '@consts/const';
 
 export class CreateCharacterComponent extends BaseComponent {
   constructor(locator: Locator) {

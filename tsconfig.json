@@ -10,7 +10,21 @@
     "resolveJsonModule": true,
     "noImplicitOverride": true,
     "noEmit": true,
-    "paths": { "@/*": ["./src/*"], "@data/*": ["./data/*"] },
+    "paths": {
+      "@components": ["./src/components"],
+      "@components/*": ["./src/components/*"],
+      "@config/*": ["./src/config/*"],
+      "@consts/*": ["./src/consts/*"],
+      "@fixtures/*": ["./src/fixtures/*"],
+      "@helpers/*": ["./src/helpers/*"],
+      "@models": ["./src/models"],
+      "@models/*": ["./src/models/*"],
+      "@pages": ["./src/pages"],
+      "@pages/*": ["./src/pages/*"],
+      "@types": ["./src/types"],
+      "@types/*": ["./src/types/*"],
+      "@data/*": ["./data/*"]
+    },
     "types": ["node"]
   },
   "include": ["tests/**/*.ts", "src/**/*.ts", "data/**/*.json", "playwright.config.ts"],

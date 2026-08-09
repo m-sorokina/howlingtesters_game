@@ -1,5 +1,5 @@
 import type { Locator } from '@playwright/test';
-import { BaseComponent } from '@/components';
+import { BaseComponent } from '@components';
 
 export class MessagePopupComponent extends BaseComponent {
   constructor(locator: Locator) {
