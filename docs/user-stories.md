@@ -63,7 +63,7 @@ This document contains user stories for the Character Creator application.
 - [ ] I should receive a message if I haven't selected a class
 - [ ] I should receive a message if I haven't distributed all the points
 - [ ] I should receive a message if I have exceeded the points limit
-- [ ] I should receive a message if I try to add a 5th character
+- [x] I should receive a message if I try to add a 5th character
 
 ## User Story #5: Managing stat points
 

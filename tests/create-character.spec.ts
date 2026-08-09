@@ -3,6 +3,10 @@ import { test, expect } from '@/fixtures/base';
 import { Character } from '@/models';
 import { distributePoints } from '@/helpers/distribute-points';
 import type { CharacterComponent } from '@/components/character.component';
+import textAssertions from '@data/textAssertions.json';
+
+const { createTeamPage } = textAssertions;
+const { headerTitle, headerText } = createTeamPage.createTeamHeader;
 
 test.describe('Creating a character', () => {
   async function assertCreatedCharacter(
@@ -133,10 +137,9 @@ test.describe('Creating a character', () => {
     'Page text is correctly displayed before and after adding a character',
     { tag: '@page-render' },
     async ({ createPage }) => {
-      await expect(createPage.createTeamHeaderTitle).toHaveText('Create your team');
-      await expect(createPage.createTeamHeaderText).toHaveText(
-        'Choose names, races and classes to create your legendary party of four.',
-      );
+      await expect(createPage.createTeamHeaderTitle).toHaveText(headerTitle);
+      await expect(createPage.createTeamHeaderText).toHaveText(headerText);
+      // To be continued, looking for the better approach
     },
   );
 });
