@@ -21,11 +21,9 @@ This document contains user stories for the Character Creator application.
 ### Tests
 
 - [x] **@create-character** - happy path - create one character, verify its visibility and the properties values
-
 - [x] **@race-class-options** - verify the create character form fields' visibility and available values to select
 - [x] **@points-to-spend** - verify points value
 - [x] **@4-characters** - verify 4 characters creation
-
 - [ ] **@page-render** - page rendering before/after creation
 
 ## User Story #2: Displaying the character list
@@ -39,6 +37,12 @@ This document contains user stories for the Character Creator application.
 - [x] I should see a list of all created characters
 - [x] Each character should display: name, race, class and stats
 - [x] The list should be updated after a new character is added
+
+### Tests
+
+- [x] **@list-character** - verify the character list and its cards are visible with the expected count
+- [x] **@cards-character** - verify each character card displays name, race, class and stats
+- [x] **@list-character-update** - verify the list updates after a new character is created
 
 ## User Story #3: Removing a character
 
@@ -64,6 +68,10 @@ This document contains user stories for the Character Creator application.
 - [ ] I should receive a message if I haven't distributed all the points
 - [ ] I should receive a message if I have exceeded the points limit
 - [x] I should receive a message if I try to add a 5th character
+
+### Tests
+
+- [x] **@character-limit** (limit-character.spec.ts) - verify the error message shown when attempting to add a 5th character
 
 ## User Story #5: Managing stat points
 
@@ -101,6 +109,11 @@ This document contains user stories for the Character Creator application.
 - [?] After adding the 4th character, the "Add character" button should be disabled
 - [x] I should receive a message about reaching the limit
 
+### Tests
+
+- [x] **@4-characters** (create-character.spec.ts) - verify a player can create up to 4 characters
+- [x] **@character-limit** (limit-character.spec.ts) - verify the error message shown when attempting to add a 5th character
+
 ## User Story #8: Editing a character
 
 **As** a user
@@ -137,3 +150,7 @@ This document contains user stories for the Character Creator application.
 - [x] I should see the details of each character in the list
 - [x] The details should include: name, race, class, all stats
 - [?] I should be able to see a summary of the stat points
+
+### Tests
+
+- [x] **@cards-character** (list-character.spec.ts) - verify each character card displays name, race, class and stats
