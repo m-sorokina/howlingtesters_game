@@ -10,13 +10,22 @@ This document contains user stories for the Character Creator application.
 
 ### Acceptance criteria:
 
-- [ ] I should be able to type the character's name (field with the placeholder "Enter name...")
+- [x] I should be able to type the character's name (field with the placeholder "Enter name...")
 - [ ] I should be able to choose a race from the list: Human, Elf, Dwarf, Orc
 - [ ] I should be able to choose a class: Warrior, Rogue, Mage, Scout
 - [ ] I should be able to distribute 15 points across the stats: Strength, Agility, Energy, Health
-- [ ] I should be able to add a character to the party after filling out the form
+- [x] I should be able to add a character to the party after filling out the form
 - [ ] I should be able to create multiple characters (up to 4)
 - [ ] All texts should be displayed correctly before and after adding a character
+
+-
+- [x] **1 test** - happy path - create one character, verify its visibility and the properties values
+
+- [ ] **2 test** - verify the create character form fields' visibility and available values to select
+- [ ] **3 test** - verify points value
+- [ ] **4 test** - verify 4 characters creation
+- [ ] **5 test** - verify 5th character can't be created
+- [ ] **6 test** - page rendering before/after creation
 
 ## User Story #2: Displaying the character list
 

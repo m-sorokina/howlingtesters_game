@@ -1,13 +1,15 @@
 import { test as base } from '@playwright/test';
-import { BasePage } from '../pages/BasePage';
+import { CreateTeam } from '../pages/create-team.page';
 
 type Fixtures = {
-  basePage: BasePage;
+  createPage: CreateTeam;
 };
 
 export const test = base.extend<Fixtures>({
-  basePage: async ({ page }, use) => {
-    await use(new BasePage(page));
+  createPage: async ({ page }, use) => {
+    const createPage = new CreateTeam(page);
+    await createPage.goto();
+    await use(createPage);
   },
 });
 
