@@ -1,5 +1,5 @@
 import { test as base } from '@playwright/test';
-import { CreateTeam } from '../pages/create-team.page';
+import { CreateTeam } from '@/pages';
 
 type Fixtures = {
   createPage: CreateTeam;
@@ -9,6 +9,7 @@ export const test = base.extend<Fixtures>({
   createPage: async ({ page }, use) => {
     const createPage = new CreateTeam(page);
     await createPage.goto();
+    await createPage.createCharacterForm.waitFor({ state: 'visible' });
     await use(createPage);
   },
 });

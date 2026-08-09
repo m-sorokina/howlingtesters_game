@@ -129,4 +129,15 @@ test.describe('Creating a character', () => {
       }
     },
   );
+
+  test(
+    'Page text is correctly displayed before and after adding a character',
+    { tag: '@page-render' },
+    async ({ createPage }) => {
+      await expect(createPage.createTeamHeaderTitle).toHaveText('Create your team');
+      await expect(createPage.createTeamHeaderText).toHaveText(
+        'Choose names, races and classes to create your legendary party of four.',
+      );
+    },
+  );
 });

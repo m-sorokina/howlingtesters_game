@@ -1,0 +1,57 @@
+{
+  "createTeamPage": {
+    "headerTitle": "Create your team",
+    "headerText": "Choose names, races and classes to create your legendary party of four.",
+    "createCharacterForm": {
+      "formHeader": "Create your character",
+      "nameInputLabel": "Character name:",
+      "nameInputPlaceholder": "Enter name...",
+      "raceSelectLabel": "Race:",
+      "classSelectLabel": "Choose class:",
+      "stats": {
+        "statsHeader": "Character stats",
+        "pointsToSpend": "Points to spend:",
+        "strength": "Strength",
+        "agility": "Agility",
+        "energy": "Energy",
+        "health": "Health"
+      },
+      "errorMessages": {
+        "classRequired": {
+          "title": "No class",
+          "message": "Choose a character class!",
+          "button": "Close"
+        },
+        "pointsRemaining": {
+          "title": "Points remaining",
+          "message": "Cannot create character. 15 points left to assign!",
+          "button": "Close"
+        }
+      },
+      "addCharacterButton": "Add character"
+    },
+    "createdCharactersList": {
+      "createdCharactersHeader": "Your characters",
+      "characterCard": {
+        "raceLabel": "Race:",
+        "classLabel": "Class:",
+        "stats": {
+          "strength": "Strength:",
+          "agility": "Agility:",
+          "energy": "Energy:",
+          "health": "Health:"
+        },
+        "removeButton": "Remove"
+      },
+      "errorMessages": {
+        "maxCharacters": {
+          "title": "Character limit",
+          "message": "You can have at most 4 characters. Remove one to add a new one.",
+          "button": "Close"
+        }
+      }
+    },
+    "goToBattleButton": "Go to battle"
+  },
+  "battlePage": {}
+}

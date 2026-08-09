@@ -8,6 +8,10 @@ export class CreateCharacterComponent extends BaseComponent {
     super(locator);
   }
 
+  get formHeader(): Locator {
+    return this.locator.getByRole('heading', { level: 2 });
+  }
+
   get nameInput(): Locator {
     return this.locator.getByPlaceholder('Enter name');
   }
