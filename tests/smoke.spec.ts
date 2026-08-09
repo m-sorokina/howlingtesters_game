@@ -1,8 +1,10 @@
 import { test, expect } from '@/fixtures/base';
+import textAssertions from '@data/textAssertions.json';
 
-test('homepage has a title, {tag: @smoke}', async ({ createPage }) => {
-  await expect(createPage.createTeamHeaderTitle).toHaveText('Create your team');
-  await expect(createPage.createTeamHeaderText).toHaveText(
-    'Choose names, races and classes to create your legendary party of four.',
-  );
+const { createTeamPage } = textAssertions;
+const { headerTitle, headerText } = createTeamPage.createTeamHeader;
+
+test('Start page is available', { tag: '@smoke' }, async ({ createPage }) => {
+  await expect(createPage.createTeamHeaderTitle).toHaveText(headerTitle);
+  await expect(createPage.createTeamHeaderText).toHaveText(headerText);
 });

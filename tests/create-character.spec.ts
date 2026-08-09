@@ -1,6 +1,6 @@
-import { STAT_KEYS, RACES, CLASSES, STAT_POINTS } from '@/consts/const';
+import { STAT_KEYS, RACES, CLASSES, STAT_POINTS, MAX_CHARACTERS } from '@/consts/const';
 import { test, expect } from '@/fixtures/base';
-import { Character } from '@/models/character.model';
+import { Character } from '@/models';
 import { distributePoints } from '@/helpers/distribute-points';
 import type { CharacterComponent } from '@/components/character.component';
 
@@ -105,10 +105,9 @@ test.describe('Creating a character', () => {
   );
 
   test(
-    'Play is able to create up to 4 characters',
+    'Player is able to create up to 4 characters',
     { tag: '@4-characters' },
     async ({ createPage }) => {
-      const MAX_CHARACTERS = 4;
       const charactersToCreate: Character[] = [];
       const createdCharacters: CharacterComponent[] = [];
 
@@ -121,7 +120,7 @@ test.describe('Creating a character', () => {
 
       await expect(
         createPage.createdCharacterCards,
-        'There should be exactly 4 created character cards',
+        `There should be exactly ${MAX_CHARACTERS} created character cards`,
       ).toHaveCount(MAX_CHARACTERS);
 
       for (let i = 0; i < createdCharacters.length; i++) {

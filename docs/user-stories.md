@@ -97,9 +97,9 @@ This document contains user stories for the Character Creator application.
 
 ### Acceptance criteria:
 
-- [ ] I should be able to create at most 4 characters
-- [ ] After adding the 4th character, the "Add character" button should be disabled
-- [ ] I should receive a message about reaching the limit
+- [x] I should be able to create at most 4 characters
+- [?] After adding the 4th character, the "Add character" button should be disabled
+- [x] I should receive a message about reaching the limit
 
 ## User Story #8: Editing a character
 

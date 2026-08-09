@@ -1,7 +1,7 @@
 import type { Locator } from '@playwright/test';
 import { BaseComponent } from '@/components';
 
-export class MessageComponent extends BaseComponent {
+export class MessagePopupComponent extends BaseComponent {
   constructor(locator: Locator) {
     super(locator);
   }

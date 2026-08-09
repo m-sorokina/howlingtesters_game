@@ -1,4 +1,14 @@
 {
   "cookies": [],
-  "origins": []
+  "origins": [
+    {
+      "origin": "https://howlingtesters.pl",
+      "localStorage": [
+        {
+          "name": "characters",
+          "value": "[{\"name\":\"Aragorn\",\"race\":\"Human\",\"charClass\":\"Warrior\",\"agility\":15,\"energy\":20,\"health\":10,\"imgSrc\":\"https://howlingtesters.pl/wp-content/uploads/2025/10/3.png\",\"strength\":10},{\"name\":\"Legolas\",\"race\":\"Elf\",\"charClass\":\"Scout\",\"agility\":20,\"energy\":15,\"health\":10,\"imgSrc\":\"https://howlingtesters.pl/wp-content/uploads/2025/10/2.png\",\"strength\":10},{\"name\":\"Gimli\",\"race\":\"Dwarf\",\"charClass\":\"Warrior\",\"agility\":10,\"energy\":15,\"health\":15,\"imgSrc\":\"https://howlingtesters.pl/wp-content/uploads/2025/10/3.png\",\"strength\":15},{\"name\":\"Gandalf\",\"race\":\"Orc\",\"charClass\":\"Mage\",\"agility\":10,\"energy\":20,\"health\":10,\"imgSrc\":\"https://howlingtesters.pl/wp-content/uploads/2025/10/1.png\",\"strength\":10}]"
+        }
+      ]
+    }
+  ]
 }

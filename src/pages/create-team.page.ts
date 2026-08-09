@@ -1,4 +1,4 @@
-import { CharacterComponent, CreateCharacterComponent } from '@/components';
+import { CharacterComponent, CreateCharacterComponent, MessagePopupComponent } from '@/components';
 import type { CharacterType } from '@/types';
 import { BasePage } from '@/pages';
 import type { Page, Locator } from '@playwright/test';
@@ -6,6 +6,7 @@ import { routes } from '@/consts/routes';
 
 export class CreateTeam extends BasePage {
   public createCharacterForm: CreateCharacterComponent;
+  public messagePopup: MessagePopupComponent;
   readonly url = routes.createCharacter;
 
   constructor(page: Page) {
@@ -13,6 +14,7 @@ export class CreateTeam extends BasePage {
     this.createCharacterForm = new CreateCharacterComponent(
       this.page.locator('#character-creator'),
     );
+    this.messagePopup = new MessagePopupComponent(this.page.locator('#popup'));
   }
 
   get createTeamHeader(): Locator {
