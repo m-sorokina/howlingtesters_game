@@ -66,7 +66,7 @@ test.describe('Creating a character', () => {
     { tag: '@points-to-spend' },
     async ({ createPage }) => {
       const defaultStats = await createPage.createCharacterForm.getStatOptionsValues();
-      const pointToSpend =
+      let pointToSpend =
         STAT_POINTS - Object.entries(defaultStats).reduce((sum, [, value]) => sum + value, 0);
       await expect(
         createPage.createCharacterForm.pointsToSpend,
@@ -81,11 +81,13 @@ test.describe('Creating a character', () => {
         (sum, [, value]) => sum + value,
         0,
       );
+      pointToSpend = totalPoint - STAT_POINTS;
+
       expect(totalPoint, 'All the stats points should be distributed').toEqual(STAT_POINTS);
       await expect(
         createPage.createCharacterForm.pointsToSpend,
-        'Points to send should be equal to 0',
-      ).toHaveText(String(STAT_POINTS - totalPoint));
+        `Points to send should be equal to ${pointToSpend}`,
+      ).toHaveText(String(pointToSpend));
     },
   );
 });
