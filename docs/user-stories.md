@@ -15,15 +15,16 @@ This document contains user stories for the Character Creator application.
 - [x] I should be able to choose a class: Warrior, Rogue, Mage, Scout
 - [x] I should be able to distribute 15 points across the stats: Strength, Agility, Energy, Health
 - [x] I should be able to add a character to the party after filling out the form
-- [ ] I should be able to create multiple characters (up to 4)
+- [x] I should be able to create multiple characters (up to 4)
 - [ ] All texts should be displayed correctly before and after adding a character
 
--
-- [x] **1 test** - happy path - create one character, verify its visibility and the properties values
+### Tests
 
-- [x] **2 test** - verify the create character form fields' visibility and available values to select
-- [x] **3 test** - verify points value
-- [ ] **4 test** - verify 4 characters creation
+- [x] **@create-character** - happy path - create one character, verify its visibility and the properties values
+
+- [x] **@race-class-options** - verify the create character form fields' visibility and available values to select
+- [x] **@points-to-spend** - verify points value
+- [x] **@4-characters** - verify 4 characters creation
 
 - [ ] **5 test** - page rendering before/after creation
 
