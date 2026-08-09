@@ -1,6 +1,7 @@
 import type { Locator } from '@playwright/test';
 import { BaseComponent } from '@/components';
 import type { Race, Class, Stats, CharacterType } from '@/types';
+import { STAT_KEYS } from '@/consts/const';
 
 export class CreateCharacterComponent extends BaseComponent {
   constructor(locator: Locator) {
@@ -11,36 +12,28 @@ export class CreateCharacterComponent extends BaseComponent {
     return this.locator.getByPlaceholder('Enter name');
   }
 
-  get raceSelect(): Locator {
+  get raceSelector(): Locator {
     return this.locator.locator('#race');
   }
 
-  get classSelect(): Locator {
+  get classesList(): Locator {
     return this.locator.locator('.class-select');
+  }
+
+  getClass(characterClass: Class): Locator {
+    return this.classesList.locator(`[data-class="${characterClass}"]`);
   }
 
   get pointsToSpend(): Locator {
     return this.locator.locator('#points-left');
   }
 
-  get strengthInput(): Locator {
-    return this.locator.locator('#strength');
-  }
-
-  get agilityInput(): Locator {
-    return this.locator.locator('#agility');
-  }
-
-  get energyInput(): Locator {
-    return this.locator.locator('#energy');
-  }
-
-  get healthInput(): Locator {
-    return this.locator.locator('#health');
-  }
-
   get addCharacterButton(): Locator {
     return this.locator.locator('#generate-btn');
+  }
+
+  getStatsInput(statOption: keyof Stats): Locator {
+    return this.locator.locator(`#${statOption}`);
   }
 
   async enterCharacterName(name: string): Promise<void> {
@@ -48,11 +41,11 @@ export class CreateCharacterComponent extends BaseComponent {
   }
 
   async selectRace(race: Race): Promise<string[]> {
-    return await this.raceSelect.selectOption(race);
+    return await this.raceSelector.selectOption(race);
   }
 
   async selectClass(characterClass: Class): Promise<void> {
-    await this.classSelect.locator(`[data-class="${characterClass}"]`).click();
+    await this.getClass(characterClass).click();
   }
 
   async setStatsOption(stat: keyof Stats, value: number): Promise<void> {
@@ -71,5 +64,15 @@ export class CreateCharacterComponent extends BaseComponent {
     await this.selectClass(characterToCreate.charClass);
     await this.setStats(characterToCreate.stats);
     await this.addCharacterButton.click();
+  }
+
+  async getStatOptionsValues(): Promise<Stats> {
+    const entries = await Promise.all(
+      STAT_KEYS.map(async (key) => {
+        const value = await this.getStatsInput(key).inputValue();
+        return [key, Number(value)];
+      }),
+    );
+    return Object.fromEntries(entries) as Stats;
   }
 }

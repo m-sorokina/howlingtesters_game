@@ -11,9 +11,9 @@ This document contains user stories for the Character Creator application.
 ### Acceptance criteria:
 
 - [x] I should be able to type the character's name (field with the placeholder "Enter name...")
-- [ ] I should be able to choose a race from the list: Human, Elf, Dwarf, Orc
-- [ ] I should be able to choose a class: Warrior, Rogue, Mage, Scout
-- [ ] I should be able to distribute 15 points across the stats: Strength, Agility, Energy, Health
+- [x] I should be able to choose a race from the list: Human, Elf, Dwarf, Orc
+- [x] I should be able to choose a class: Warrior, Rogue, Mage, Scout
+- [x] I should be able to distribute 15 points across the stats: Strength, Agility, Energy, Health
 - [x] I should be able to add a character to the party after filling out the form
 - [ ] I should be able to create multiple characters (up to 4)
 - [ ] All texts should be displayed correctly before and after adding a character
@@ -21,11 +21,11 @@ This document contains user stories for the Character Creator application.
 -
 - [x] **1 test** - happy path - create one character, verify its visibility and the properties values
 
-- [ ] **2 test** - verify the create character form fields' visibility and available values to select
-- [ ] **3 test** - verify points value
+- [x] **2 test** - verify the create character form fields' visibility and available values to select
+- [x] **3 test** - verify points value
 - [ ] **4 test** - verify 4 characters creation
-- [ ] **5 test** - verify 5th character can't be created
-- [ ] **6 test** - page rendering before/after creation
+
+- [ ] **5 test** - page rendering before/after creation
 
 ## User Story #2: Displaying the character list
 
@@ -108,10 +108,10 @@ This document contains user stories for the Character Creator application.
 
 ### Acceptance criteria:
 
-- [ ] I should be able to click on a character in the list to edit it
-- [ ] The form should be filled with the selected character's data
-- [ ] I should be able to change the data and save the changes
-- [ ] The changes should be visible in the character list
+- [?] I should be able to click on a character in the list to edit it
+- [?] The form should be filled with the selected character's data
+- [?] I should be able to change the data and save the changes
+- [?] The changes should be visible in the character list
 
 ## User Story #9: Resetting the form
 
@@ -121,9 +121,9 @@ This document contains user stories for the Character Creator application.
 
 ### Acceptance criteria:
 
-- [ ] I should be able to reset the form to default values
-- [ ] After the reset all fields should go back to their initial values
-- [ ] Stat points should go back to 15
+- [?] I should be able to reset the form to default values
+- [?] After the reset all fields should go back to their initial values
+- [?] Stat points should go back to 15
 
 ## User Story #10: Displaying character details
 
@@ -133,6 +133,6 @@ This document contains user stories for the Character Creator application.
 
 ### Acceptance criteria:
 
-- [ ] I should see the details of each character in the list
-- [ ] The details should include: name, race, class, all stats
-- [ ] I should be able to see a summary of the stat points
+- [x] I should see the details of each character in the list
+- [x] The details should include: name, race, class, all stats
+- [?] I should be able to see a summary of the stat points
