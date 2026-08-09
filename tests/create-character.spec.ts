@@ -51,6 +51,7 @@ test.describe('Creating a character', () => {
           `Race option should have value ${race}`,
         ).toHaveValue(race);
       }
+
       for (const charClass of CLASSES) {
         await createPage.createCharacterForm.selectClass(charClass);
         await expect(
