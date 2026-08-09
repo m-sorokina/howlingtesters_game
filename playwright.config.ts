@@ -9,14 +9,20 @@ export default defineConfig({
   retries: process.env.CI ? 0 : 0,
   workers: process.env.CI ? 1 : 1,
   reporter: [['list'], ['html', { open: 'never' }]],
+  timeout: 10_000,
+  expect: {
+    timeout: 3_000,
+  },
   use: {
     baseURL: env.baseURL,
     trace: 'on',
     screenshot: 'only-on-failure',
+    actionTimeout: 5_000,
+    navigationTimeout: 5_000,
   },
   projects: [
     {
-      name: 'chromium',
+      name: 'game',
       use: { ...devices['Desktop Chrome'] },
     },
   ],
