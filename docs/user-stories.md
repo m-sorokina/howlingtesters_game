@@ -20,11 +20,11 @@ This document contains user stories for the Character Creator application.
 
 ### Tests
 
-- [x] **@create-character** - happy path - create one character, verify its visibility and the properties values
-- [x] **@race-class-options** - verify the create character form fields' visibility and available values to select
-- [x] **@points-to-spend** - verify points value
-- [x] **@4-characters** - verify 4 characters creation
-- [ ] **@page-render** - page rendering before/after creation
+- [x] **@create-character** (create-character.spec.ts) - happy path - create one character, verify its visibility and the properties values
+- [x] **@race-class-options** (create-character.spec.ts) - verify the create character form fields' visibility and available values to select
+- [x] **@points-to-spend** (create-character.spec.ts) - verify points value
+- [x] **@4-characters** (create-character.spec.ts) - verify 4 characters creation
+- [ ] **@page-render** (create-character.spec.ts) - page rendering before/after creation
 
 ## User Story #2: Displaying the character list
 
@@ -40,9 +40,9 @@ This document contains user stories for the Character Creator application.
 
 ### Tests
 
-- [x] **@list-character** - verify the character list and its cards are visible with the expected count
-- [x] **@cards-character** - verify each character card displays name, race, class and stats
-- [x] **@list-character-update** - verify the list updates after a new character is created
+- [x] **@list-character** (list-character.spec.ts) - verify the character list and its cards are visible with the expected count
+- [x] **@cards-character** (list-character.spec.ts) - verify each character card displays name, race, class and stats
+- [x] **@list-character-update** (list-character.spec.ts) - verify the list updates after a new character is created
 
 ## User Story #3: Removing a character
 
