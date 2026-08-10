@@ -1,5 +1,5 @@
 import { BasePage } from '@pages';
-import type { Page } from 'playwright-core';
+import type { Page } from '@playwright/test';
 import { routes } from '@consts/routes';
 
 export class BattlePage extends BasePage {
