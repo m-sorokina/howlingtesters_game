@@ -1,6 +1,6 @@
 import type { Locator } from '@playwright/test';
 
-export class BaseComponent {
+export abstract class BaseComponent {
   constructor(protected locator: Locator) {
     this.locator = locator;
   }

@@ -2,7 +2,7 @@ import { STAT_KEYS, RACES, CLASSES, STAT_POINTS, MAX_CHARACTERS } from '@consts/
 import { test, expect } from '@fixtures/base';
 import { Character } from '@models';
 import { distributePoints } from '@helpers/distribute-points';
-import type { CharacterComponent } from '@components/character.component';
+import type { CharacterComponent } from '@components';
 import textAssertions from '@data/textAssertions.json';
 
 const { createTeamPage } = textAssertions;
@@ -40,6 +40,7 @@ test.describe('Creating a character', () => {
         createPage.getSpecifiedCharacterCard(character.name).name,
         'Created character cards should be visible',
       ).toBeVisible();
+
       await expect(createPage.createdCharacterCards, 'There should be exactly one created character card').toHaveCount(
         1,
       );
@@ -80,9 +81,7 @@ test.describe('Creating a character', () => {
       ).toHaveText(String(pointToSpend));
 
       const distributedStats = distributePoints(pointToSpend, defaultStats);
-      for (const key of STAT_KEYS) {
-        await createPage.createCharacterForm.setStatsOption(key, distributedStats[key]);
-      }
+      await createPage.createCharacterForm.setStats(distributedStats);
       const totalPoint = Object.entries(distributedStats).reduce((sum, [, value]) => sum + value, 0);
       pointToSpend = totalPoint - STAT_POINTS;
 
@@ -121,7 +120,7 @@ test.describe('Creating a character', () => {
     async ({ createPage }) => {
       await expect(createPage.createTeamHeaderTitle).toHaveText(headerTitle);
       await expect(createPage.createTeamHeaderText).toHaveText(headerText);
-      // To be continued, looking for the better approach
+      // To be continued, looking for a better approach
     },
   );
 });

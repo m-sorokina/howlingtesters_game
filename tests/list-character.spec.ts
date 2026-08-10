@@ -26,14 +26,23 @@ test.describe('Displaying the character list', () => {
 
   test('Player is able to see character details', { tag: '@cards-character' }, async ({ createPage }) => {
     for (const name of characterCardsName) {
-      await expect(createPage.getSpecifiedCharacterCard(name).name).toBeVisible();
-      await expect(createPage.getSpecifiedCharacterCard(name).race).toBeVisible();
-      await expect(createPage.getSpecifiedCharacterCard(name).charClass).toBeVisible();
+      await expect(
+        createPage.getSpecifiedCharacterCard(name).name,
+        `${name} character should be visible on card`,
+      ).toBeVisible();
+      await expect(
+        createPage.getSpecifiedCharacterCard(name).race,
+        `${name} character race should be visible on card`,
+      ).toBeVisible();
+      await expect(
+        createPage.getSpecifiedCharacterCard(name).charClass,
+        `${name} character class should be visible on card`,
+      ).toBeVisible();
       for (const key of STAT_KEYS) {
         const label = key.charAt(0).toUpperCase() + key.slice(1);
         await expect(
           createPage.getSpecifiedCharacterCard(name).stats.filter({ hasText: new RegExp(`^${label}: \\d+$`) }),
-          'Created character stats should match',
+          `${name} character stat details ${label} should be visible on card`,
         ).toBeVisible();
       }
     }
@@ -49,7 +58,7 @@ test.describe('Displaying the character list', () => {
 
       await expect(
         createPage.getSpecifiedCharacterCard(newCharacter.name).name,
-        'Created character cards should be visible',
+        'Recently created character card should be visible',
       ).toBeVisible();
 
       await expect(

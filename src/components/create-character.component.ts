@@ -53,7 +53,7 @@ export class CreateCharacterComponent extends BaseComponent {
   }
 
   async setStatsOption(stat: keyof Stats, value: number): Promise<void> {
-    await this.locator.locator(`#${stat}`).fill(String(value));
+    await this.getStatsInput(stat).fill(String(value));
   }
 
   async setStats(stats: Stats): Promise<void> {
