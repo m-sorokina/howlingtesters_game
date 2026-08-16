@@ -1,4 +1,4 @@
-import { STAT_KEYS, RACES, CLASSES, STAT_POINTS, MAX_CHARACTERS } from '@consts/const';
+import { STAT_KEYS, RACES, CLASSES, STAT_POINTS, MAX_CHARACTERS } from '@consts';
 import { test, expect } from '@fixtures/base';
 import { Character } from '@models';
 import { distributePoints } from '@helpers/distribute-points';

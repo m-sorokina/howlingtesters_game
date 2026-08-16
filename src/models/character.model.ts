@@ -1,5 +1,5 @@
 import type { Race, Class, Stats, CharacterType } from '@types';
-import { STAT_DEFAULT, STAT_POINTS, RACES, CLASSES, STAT_KEYS } from '@consts/const';
+import { STAT_DEFAULT, STAT_POINTS, RACES, CLASSES, STAT_KEYS } from '@consts';
 import { faker } from '@faker-js/faker';
 import { distributePoints } from '@helpers/distribute-points';
 

@@ -2,7 +2,7 @@ import { CharacterComponent, CreateCharacterComponent, MessagePopupComponent } f
 import type { CharacterType } from '@types';
 import { BasePage } from '@pages';
 import type { Page, Locator } from '@playwright/test';
-import { routes } from '@consts/routes';
+import { routes } from '@consts';
 
 export class CreateTeam extends BasePage {
   public createCharacterForm: CreateCharacterComponent;

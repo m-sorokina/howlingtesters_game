@@ -1,5 +1,5 @@
 import { test, expect } from '@fixtures/base';
-import { STAT_KEYS } from '@consts/const';
+import { STAT_KEYS } from '@consts';
 import { Character } from '@models';
 
 test.describe('Displaying the character list', () => {

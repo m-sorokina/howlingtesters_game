@@ -1,7 +1,7 @@
 import { test, expect } from '@fixtures/base';
 import { Character } from '@models';
 import textAssertions from '@data/textAssertions.json';
-import { MAX_CHARACTERS } from '@consts/const';
+import { MAX_CHARACTERS } from '@consts';
 
 const { maxCharacters } = textAssertions.createTeamPage.createCharacterForm.errorMessages;
 
