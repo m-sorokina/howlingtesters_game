@@ -73,10 +73,7 @@ export class CreateCharacterComponent {
 
   async getStatOptionsValues(): Promise<Stats> {
     const entries = await Promise.all(
-      (STAT_KEYS as readonly (keyof Stats)[]).map(async (key): Promise<[keyof Stats, number]> => [
-        key,
-        Number(await this.getStatsInput(key).inputValue()),
-      ]),
+      STAT_KEYS.map(async (key) => [key, Number(await this.getStatsInput(key).inputValue())]),
     );
     return Object.fromEntries(entries) as Stats;
   }
