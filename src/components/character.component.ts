@@ -1,9 +1,12 @@
-import { BaseComponent } from '@components';
 import type { Locator } from '@playwright/test';
 
-export class CharacterComponent extends BaseComponent {
+export class CharacterComponent {
+  readonly locator: Locator;
+
   constructor(locator: Locator, name: string) {
-    super(locator.locator('.details').filter({ has: locator.page().getByRole('heading', { name, exact: true }) }));
+    this.locator = locator
+      .locator('.details')
+      .filter({ has: locator.page().getByRole('heading', { name, exact: true }) });
   }
 
   get removeButton(): Locator {

@@ -1,10 +1,7 @@
 import type { Locator } from '@playwright/test';
-import { BaseComponent } from '@components';
 
-export class MessagePopupComponent extends BaseComponent {
-  constructor(locator: Locator) {
-    super(locator);
-  }
+export class MessagePopupComponent {
+  constructor(readonly locator: Locator) {}
 
   get title(): Locator {
     return this.locator.locator('#popup-title');

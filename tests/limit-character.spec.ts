@@ -20,7 +20,7 @@ test.describe('Character limit', () => {
     await createPage.createCharacterForm.setStats(character.stats);
     await Promise.all([
       createPage.createCharacterForm.addCharacterButton.click(),
-      createPage.messagePopup.waitFor({ state: 'visible' }),
+      createPage.messagePopup.locator.waitFor({ state: 'visible' }),
     ]);
     await expect(createPage.messagePopup.title, `Expected message popup title to be ${maxCharacters.title}`).toHaveText(
       maxCharacters.title,

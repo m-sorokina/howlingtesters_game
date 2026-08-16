@@ -1,12 +1,9 @@
 import type { Locator } from '@playwright/test';
-import { BaseComponent } from '@components';
 import type { Race, Class, Stats, CharacterType } from '@types';
 import { STAT_KEYS } from '@consts';
 
-export class CreateCharacterComponent extends BaseComponent {
-  constructor(locator: Locator) {
-    super(locator);
-  }
+export class CreateCharacterComponent {
+  constructor(readonly locator: Locator) {}
 
   get formHeader(): Locator {
     return this.locator.getByRole('heading', { level: 2 });

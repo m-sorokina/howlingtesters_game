@@ -9,7 +9,6 @@ export const test = base.extend<Fixtures>({
   createPage: async ({ page }, use) => {
     const createPage = new CreateTeam(page);
     await createPage.goto();
-    await createPage.createCharacterForm.waitFor({ state: 'visible' });
     await use(createPage);
   },
 });
