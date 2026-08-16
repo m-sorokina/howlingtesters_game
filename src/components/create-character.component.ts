@@ -59,20 +59,24 @@ export class CreateCharacterComponent {
     }
   }
 
-  async createCharacter(characterToCreate: CharacterType): Promise<void> {
+  async fillCharacter(characterToCreate: CharacterType): Promise<void> {
     await this.enterCharacterName(characterToCreate.name);
     await this.selectRace(characterToCreate.race);
     await this.selectClass(characterToCreate.charClass);
     await this.setStats(characterToCreate.stats);
+  }
+
+  async createCharacter(characterToCreate: CharacterType): Promise<void> {
+    await this.fillCharacter(characterToCreate);
     await this.addCharacterButton.click();
   }
 
   async getStatOptionsValues(): Promise<Stats> {
     const entries = await Promise.all(
-      STAT_KEYS.map(async (key) => {
-        const value = await this.getStatsInput(key).inputValue();
-        return [key, Number(value)];
-      }),
+      (STAT_KEYS as readonly (keyof Stats)[]).map(async (key): Promise<[keyof Stats, number]> => [
+        key,
+        Number(await this.getStatsInput(key).inputValue()),
+      ]),
     );
     return Object.fromEntries(entries) as Stats;
   }

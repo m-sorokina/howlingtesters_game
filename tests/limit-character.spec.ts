@@ -14,14 +14,10 @@ test.describe('Character limit', () => {
     );
 
     const character = new Character();
-    await createPage.createCharacterForm.enterCharacterName(character.name);
-    await createPage.createCharacterForm.selectRace(character.race);
-    await createPage.createCharacterForm.selectClass(character.charClass);
-    await createPage.createCharacterForm.setStats(character.stats);
-    await Promise.all([
-      createPage.createCharacterForm.addCharacterButton.click(),
-      createPage.messagePopup.locator.waitFor({ state: 'visible' }),
-    ]);
+    await createPage.createCharacterForm.fillCharacter(character);
+    await createPage.createCharacterForm.addCharacterButton.click();
+    await expect(createPage.messagePopup.locator).toBeVisible();
+
     await expect(createPage.messagePopup.title, `Expected message popup title to be ${maxCharacters.title}`).toHaveText(
       maxCharacters.title,
     );
