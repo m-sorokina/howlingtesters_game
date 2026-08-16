@@ -24,7 +24,9 @@
       "@pages/*": ["./src/pages/*"],
       "@types": ["./src/types"],
       "@types/*": ["./src/types/*"],
-      "@data/*": ["./data/*"]
+      "@data/*": ["./data/*"],
+      "@assertions/*": ["./src/assertions/*"],
+      "@assertions": ["./src/assertions/index.ts"]
     },
     "types": ["node"]
   },

@@ -39,9 +39,8 @@ export class CreateTeam extends BasePage {
     return this.createdCharactersList.locator('.character-card');
   }
 
-  async createCharacter(characterToCreate: CharacterType): Promise<CharacterComponent> {
+  async createCharacter(characterToCreate: CharacterType): Promise<void> {
     await this.createCharacterForm.createCharacter(characterToCreate);
-    return new CharacterComponent(this.createdCharacterCards, characterToCreate.name);
   }
 
   getSpecifiedCharacterCard(name: string): CharacterComponent {

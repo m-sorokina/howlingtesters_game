@@ -1,51 +1,26 @@
-import { STAT_KEYS, RACES, CLASSES, STAT_POINTS, MAX_CHARACTERS } from '@consts';
+import { RACES, CLASSES, STAT_POINTS, MAX_CHARACTERS } from '@consts';
 import { test, expect } from '@fixtures/base';
 import { Character } from '@models';
 import { distributePoints } from '@helpers/distribute-points';
 import type { CharacterComponent } from '@components';
+import { assertCharacterCardDetails, assertCharacterCardVisibility, assertCharacterCardQuantity } from '@assertions';
 import textAssertions from '@data/textAssertions.json';
 
 const { createTeamPage } = textAssertions;
 const { headerTitle, headerText } = createTeamPage.createTeamHeader;
 
 test.describe('Creating a character', () => {
-  async function assertCreatedCharacter(characterToCreate: Character, createdCharacter: CharacterComponent) {
-    await expect(createdCharacter.name, 'Created character name should match').toHaveText(characterToCreate.name);
-    await expect(createdCharacter.race, 'Created character race should match').toHaveText(
-      `Race: ${characterToCreate.race}`,
-    );
-    await expect(createdCharacter.charClass, 'Created character class should match').toHaveText(
-      `Class: ${characterToCreate.charClass}`,
-    );
-    await expect(createdCharacter.stats, `Created character should have ${STAT_KEYS.length} stats`).toHaveCount(
-      STAT_KEYS.length,
-    );
-    for (const [index, key] of STAT_KEYS.entries()) {
-      const label = key.charAt(0).toUpperCase() + key.slice(1);
-      await expect(createdCharacter.stats.nth(index), 'Created character stats should match').toHaveText([
-        `${label}: ${characterToCreate.stats[key]}`,
-      ]);
-    }
-  }
-
   test(
     'Player is able to create a character with name, race, class and stats',
     { tag: '@create-character' },
     async ({ createPage }) => {
       const character = new Character();
+      await createPage.createCharacter(character);
+      const createdCharacter = createPage.getSpecifiedCharacterCard(character.name);
 
-      const createdCharacter = await createPage.createCharacter(character);
-
-      await expect(
-        createPage.getSpecifiedCharacterCard(character.name).name,
-        'Created character cards should be visible',
-      ).toBeVisible();
-
-      await expect(createPage.createdCharacterCards, 'There should be exactly one created character card').toHaveCount(
-        1,
-      );
-
-      await assertCreatedCharacter(character, createdCharacter);
+      await assertCharacterCardVisibility(createdCharacter.name);
+      await assertCharacterCardQuantity(createPage.createdCharacterCards, 1);
+      await assertCharacterCardDetails(character, createdCharacter);
     },
   );
 
@@ -100,17 +75,14 @@ test.describe('Creating a character', () => {
     for (let i = 0; i < MAX_CHARACTERS; i++) {
       const character = new Character(RACES[i], CLASSES[i]);
       charactersToCreate.push(character);
-      const createdCharacter = await createPage.createCharacter(character);
+      await createPage.createCharacter(character);
+      const createdCharacter = createPage.getSpecifiedCharacterCard(character.name);
       createdCharacters.push(createdCharacter);
     }
 
-    await expect(
-      createPage.createdCharacterCards,
-      `There should be exactly ${MAX_CHARACTERS} created character cards`,
-    ).toHaveCount(MAX_CHARACTERS);
-
+    await assertCharacterCardQuantity(createPage.createdCharacterCards, MAX_CHARACTERS);
     for (let i = 0; i < createdCharacters.length; i++) {
-      await assertCreatedCharacter(charactersToCreate[i]!, createdCharacters[i]!);
+      await assertCharacterCardDetails(charactersToCreate[i]!, createdCharacters[i]!);
     }
   });
 
