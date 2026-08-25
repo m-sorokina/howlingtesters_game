@@ -1,5 +1,5 @@
 import type { Locator } from '@playwright/test';
-import { expect } from '@fixtures/base';
+import { expect } from '@fixtures';
 import type { Character } from '@models';
 import type { CharacterComponent } from '@components';
 import { STAT_KEYS } from '@consts';

@@ -1,4 +1,4 @@
-import { test, expect } from '@fixtures/base';
+import { test, expect } from '@fixtures';
 import { STAT_KEYS } from '@consts';
 import { Character } from '@models';
 import arrayOf3Characters from '@data/preseed-party-3-characters.json';

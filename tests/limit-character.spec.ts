@@ -1,4 +1,4 @@
-import { test, expect } from '@fixtures/base';
+import { test, expect } from '@fixtures';
 import { Character } from '@models';
 import { maxCharacters } from '@data/text/en/party/error-messages.json';
 import { MAX_CHARACTERS } from '@consts';

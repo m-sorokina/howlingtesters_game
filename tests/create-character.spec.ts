@@ -1,7 +1,7 @@
 import { RACES, CLASSES, STAT_POINTS, MAX_CHARACTERS } from '@consts';
-import { test, expect } from '@fixtures/base';
+import { test, expect } from '@fixtures';
 import { Character } from '@models';
-import { distributePoints } from '@helpers/distribute-points';
+import { distributePoints } from '@helpers';
 import type { CharacterComponent } from '@components';
 import { assertCharacterCardDetails, assertCharacterCardVisibility, assertCharacterCardQuantity } from '@assertions';
 import { createTeamHeader } from '@data/text/en/party/party-general.json';

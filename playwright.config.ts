@@ -15,7 +15,6 @@ export default defineConfig({
   },
   use: {
     baseURL: env.baseURL,
-    storageState: './playwright/.auth/user.json',
     trace: 'on',
     screenshot: 'only-on-failure',
     actionTimeout: 6_000,
@@ -23,8 +22,13 @@ export default defineConfig({
   },
   projects: [
     {
+      name: 'setup',
+      testMatch: /.*\.setup\.ts/,
+    },
+    {
       name: 'game',
-      use: { ...devices['Desktop Chrome'] },
+      use: { ...devices['Desktop Chrome'], storageState: './playwright/.auth/user.json' },
+      dependencies: ['setup'],
     },
   ],
 });
