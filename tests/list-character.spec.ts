@@ -1,17 +1,20 @@
 import { test, expect } from '@fixtures/base';
 import { STAT_KEYS } from '@consts';
 import { Character } from '@models';
+import arrayOf3Characters from '@data/preseed-party-3-characters.json';
 
 test.describe('Displaying the character list', () => {
-  test.use({ storageState: 'data/characters-list.json' });
-  const characterCardsName = ['Aragorn', 'Legolas', 'Gimli'];
+  test.beforeEach(async ({ createPage }) => {
+    await createPage.page.localStorage.setItem('characters', JSON.stringify(arrayOf3Characters));
+    await createPage.page.reload();
+  });
 
   test('Player see the list of created characters', { tag: '@list-character' }, async ({ createPage }) => {
-    const qtyOfCharacters = characterCardsName.length;
+    const qtyOfCharacters = arrayOf3Characters.length;
 
     await expect(createPage.createdCharactersList, 'Created characters list should be visible').toBeVisible();
 
-    for (const name of characterCardsName) {
+    for (const { name } of arrayOf3Characters) {
       await expect(
         createPage.getSpecifiedCharacterCard(name).name,
         `Card for ${name} character should be visible`,
@@ -25,7 +28,7 @@ test.describe('Displaying the character list', () => {
   });
 
   test('Player is able to see character details', { tag: '@cards-character' }, async ({ createPage }) => {
-    for (const name of characterCardsName) {
+    for (const { name } of arrayOf3Characters) {
       await expect(
         createPage.getSpecifiedCharacterCard(name).name,
         `${name} character should be visible on card`,
@@ -63,8 +66,8 @@ test.describe('Displaying the character list', () => {
 
       await expect(
         createPage.createdCharacterCards,
-        `There should be exactly ${characterCardsName.length + 1} character cards`,
-      ).toHaveCount(characterCardsName.length + 1);
+        `There should be exactly ${arrayOf3Characters.length + 1} character cards`,
+      ).toHaveCount(arrayOf3Characters.length + 1);
     },
   );
 });

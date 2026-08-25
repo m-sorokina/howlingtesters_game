@@ -1,14 +1,14 @@
 import { test, expect } from '@fixtures/base';
 import { Character } from '@models';
-import textAssertions from '@data/textAssertions.json';
+import { maxCharacters } from '@data/text/en/party/error-messages.json';
 import { MAX_CHARACTERS } from '@consts';
-
-const { maxCharacters } = textAssertions.createTeamPage.createCharacterForm.errorMessages;
+import arrayOf4Characters from '@data/preseed-party-4-characters.json';
 
 test.describe('Character limit', () => {
-  test.use({ storageState: 'data/characters-limit.json' });
-
   test('Player is able to create maximum of 4 characters', { tag: '@character-limit' }, async ({ createPage }) => {
+    await createPage.page.localStorage.setItem('characters', JSON.stringify(arrayOf4Characters));
+    await createPage.page.reload();
+
     await expect(createPage.createdCharacterCards, `Expected ${MAX_CHARACTERS} characters to be created`).toHaveCount(
       MAX_CHARACTERS,
     );

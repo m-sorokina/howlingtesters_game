@@ -4,10 +4,9 @@ import { Character } from '@models';
 import { distributePoints } from '@helpers/distribute-points';
 import type { CharacterComponent } from '@components';
 import { assertCharacterCardDetails, assertCharacterCardVisibility, assertCharacterCardQuantity } from '@assertions';
-import textAssertions from '@data/textAssertions.json';
+import { createTeamHeader } from '@data/text/en/party/party-general.json';
 
-const { createTeamPage } = textAssertions;
-const { headerTitle, headerText } = createTeamPage.createTeamHeader;
+const { headerTitle, headerText } = createTeamHeader;
 
 test.describe('Creating a character', () => {
   test(

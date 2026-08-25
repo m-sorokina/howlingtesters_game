@@ -7,7 +7,7 @@ export default defineConfig({
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 0 : 0,
-  workers: process.env.CI ? 1 : 1,
+  workers: process.env.CI ? 3 : undefined,
   reporter: [['list'], ['html', { open: 'never' }]],
   timeout: 10_000,
   expect: {
@@ -15,6 +15,7 @@ export default defineConfig({
   },
   use: {
     baseURL: env.baseURL,
+    storageState: './playwright/.auth/user.json',
     trace: 'on',
     screenshot: 'only-on-failure',
     actionTimeout: 5_000,

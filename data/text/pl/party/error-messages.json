@@ -1,0 +1,17 @@
+{
+  "classRequired": {
+    "title": "Brak klasy",
+    "message": "Wybierz klasę postaci!",
+    "button": "Zamknij"
+  },
+  "pointsRemaining": {
+    "title": "Pozostałe punkty",
+    "message": "Nie można utworzyć postaci. Pozostało 15 punktów do przydzielenia!",
+    "button": "Zamknij"
+  },
+  "maxCharacters": {
+    "title": "Limit postaci",
+    "message": "Możesz mieć maksymalnie 4 postacie. Usuń jedną, aby dodać nową.",
+    "button": "Zamknij"
+  }
+}

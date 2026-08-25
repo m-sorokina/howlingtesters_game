@@ -1,0 +1,14 @@
+{
+  "createdCharactersHeader": "Twoje postacie",
+  "characterCard": {
+    "raceLabel": "Rasa:",
+    "classLabel": "Klasa:",
+    "stats": {
+      "strength": "Siła:",
+      "agility": "Zwinność:",
+      "energy": "Energia:",
+      "health": "Zdrowie:"
+    },
+    "removeButton": "Usuń"
+  }
+}
