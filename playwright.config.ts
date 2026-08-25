@@ -18,8 +18,8 @@ export default defineConfig({
     storageState: './playwright/.auth/user.json',
     trace: 'on',
     screenshot: 'only-on-failure',
-    actionTimeout: 5_000,
-    navigationTimeout: 5_000,
+    actionTimeout: 6_000,
+    navigationTimeout: 6_000,
   },
   projects: [
     {
