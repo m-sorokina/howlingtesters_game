@@ -1,8 +1,10 @@
 import { test, expect } from '@fixtures';
 import { Character } from '@models';
-import { maxCharacters } from '@data/text/en/party/error-messages.json';
+import { content } from '@content';
 import { MAX_CHARACTERS } from '@consts';
 import arrayOf4Characters from '@data/preseed-party-4-characters.json';
+
+const { title, message, button } = content.errorMessages.maxCharacters;
 
 test.describe('Character limit', () => {
   test('Player is able to create maximum of 4 characters', { tag: '@character-limit' }, async ({ createPage }) => {
@@ -18,16 +20,12 @@ test.describe('Character limit', () => {
     await createPage.createCharacterForm.addCharacterButton.click();
     await expect(createPage.messagePopup.locator).toBeVisible();
 
-    await expect(createPage.messagePopup.title, `Expected message popup title to be ${maxCharacters.title}`).toHaveText(
-      maxCharacters.title,
+    await expect(createPage.messagePopup.title, `Expected message popup title to be ${title}`).toHaveText(title);
+    await expect(createPage.messagePopup.message, `Expected message popup message to be ${message}`).toHaveText(
+      content.errorMessages.maxCharacters.message,
     );
-    await expect(
-      createPage.messagePopup.message,
-      `Expected message popup message to be ${maxCharacters.message}`,
-    ).toHaveText(maxCharacters.message);
-    await expect(
-      createPage.messagePopup.closeButton,
-      `Expected message popup close button to be ${maxCharacters.button}`,
-    ).toHaveText(maxCharacters.button);
+    await expect(createPage.messagePopup.closeButton, `Expected message popup close button to be ${button}`).toHaveText(
+      button,
+    );
   });
 });

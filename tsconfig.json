@@ -12,7 +12,7 @@
     "noEmit": true,
     "paths": {
       "@components": ["./src/components"],
-      "@config/*": ["./src/config/*"],
+      "@config": ["./src/config"],
       "@consts": ["./src/consts"],
       "@fixtures": ["./src/fixtures"],
       "@helpers": ["./src/helpers"],

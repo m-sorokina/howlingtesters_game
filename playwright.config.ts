@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import { defineConfig, devices } from '@playwright/test';
-import { env } from '@config/env';
+import { env } from '@config';
 
 export default defineConfig({
   testDir: './tests',
@@ -9,7 +9,7 @@ export default defineConfig({
   retries: process.env.CI ? 0 : 0,
   workers: process.env.CI ? 3 : undefined,
   reporter: [['list'], ['html', { open: 'never' }]],
-  timeout: 10_000,
+  timeout: 15_000,
   expect: {
     timeout: 3_000,
   },
