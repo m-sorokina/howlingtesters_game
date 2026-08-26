@@ -6,10 +6,6 @@ export function assertCharacterCardDetails(characterToCreate: Character, created
   expect(characterToCreate, 'Created character details should be equal to').toEqual(createdCharacter);
 }
 
-export async function assertCharacterCardVisibility(createdCharacterName: Locator): Promise<void> {
-  await expect(createdCharacterName, 'Created character card should be visible').toBeVisible();
-}
-
 export async function assertCharacterCardQuantity(
   createdCharacterCards: Locator,
   expectedQuantity: number,

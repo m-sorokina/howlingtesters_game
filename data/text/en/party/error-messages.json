@@ -12,6 +12,12 @@
       "title": "Character limit",
       "message": "You can have at most 4 characters. Remove one to add a new one.",
       "button": "Close"
+    },
+    {
+      "type": "duplicateName",
+      "title": "Duplicate name",
+      "message": "A character with this name already exists! Choose another name.",
+      "button": "Close"
     }
   ]
 }

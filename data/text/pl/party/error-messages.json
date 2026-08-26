@@ -12,6 +12,12 @@
       "title": "Limit postaci",
       "message": "Możesz mieć maksymalnie 4 postacie. Usuń jedną, aby dodać nową.",
       "button": "Zamknij"
+    },
+    {
+      "type": "duplicateName",
+      "title": "Zduplikowana nazwa",
+      "message": "Postać o tej nazwie już istnieje! Wybierz inną nazwę.",
+      "button": "Zamknij"
     }
   ]
 }

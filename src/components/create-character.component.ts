@@ -59,15 +59,22 @@ export class CreateCharacterComponent {
     }
   }
 
-  async fillCharacter(characterToCreate: CharacterType): Promise<void> {
+  async fillCharacter(
+    characterToCreate: CharacterType,
+    options?: { addClass?: boolean; addStats?: boolean },
+  ): Promise<void> {
     await this.enterCharacterName(characterToCreate.name);
     await this.selectRace(characterToCreate.race);
-    await this.selectClass(characterToCreate.charClass);
-    await this.setStats(characterToCreate.stats);
+    if (options && options.addClass) {
+      await this.selectClass(characterToCreate.charClass);
+    }
+    if (options && options.addStats) {
+      await this.setStats(characterToCreate.stats);
+    }
   }
 
   async createCharacter(characterToCreate: CharacterType): Promise<void> {
-    await this.fillCharacter(characterToCreate);
+    await this.fillCharacter(characterToCreate, { addClass: true, addStats: true });
     await this.addCharacterButton.click();
   }
 

@@ -1,22 +1,6 @@
-import type { Locator } from '@playwright/test';
 import { expect } from '@fixtures';
 import type { ErrorMessage } from '@types';
 import { MessagePopupComponent } from '@components';
-
-type State = 'visible' | 'hidden';
-
-export async function assertPopupVisibility(popup: Locator, state: State = 'visible') {
-  switch (state) {
-    case 'visible':
-      await expect(popup).toBeVisible();
-      break;
-    case 'hidden':
-      await expect(popup).toBeHidden();
-      break;
-    default:
-      throw new Error(`Unexpected popup state: ${state}`);
-  }
-}
 
 export async function assertPopup(messagePopup: MessagePopupComponent, content: ErrorMessage) {
   const { title, message, button } = content;
