@@ -9,8 +9,8 @@ export class Character implements CharacterType {
   charClass: Class;
   stats: Stats;
 
-  constructor(race?: Race, charClass?: Class, stats?: Stats) {
-    this.name = faker.person.firstName();
+  constructor(name?: string, race?: Race, charClass?: Class, stats?: Stats) {
+    this.name = name ?? faker.person.firstName();
     this.race = race ?? faker.helpers.arrayElement(RACES);
     this.charClass = charClass ?? faker.helpers.arrayElement(CLASSES);
     this.stats = stats ?? this.generateStats();

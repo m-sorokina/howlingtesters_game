@@ -1,5 +1,6 @@
 import { CharacterComponent, CreateCharacterComponent, MessagePopupComponent } from '@components';
 import type { CharacterType } from '@types';
+import { Character } from '@models';
 import { BasePage } from '@pages';
 import type { Page, Locator } from '@playwright/test';
 import { routes } from '@consts';
@@ -45,5 +46,9 @@ export class CreateTeam extends BasePage {
 
   getSpecifiedCharacterCard(name: string): CharacterComponent {
     return new CharacterComponent(this.createdCharacterCards, name);
+  }
+
+  async getSpecifiedCharacterDetails(name: string): Promise<Character> {
+    return this.getSpecifiedCharacterCard(name).getDetails();
   }
 }

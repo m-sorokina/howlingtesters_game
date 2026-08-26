@@ -9,7 +9,7 @@ test.describe('Displaying the character list', () => {
     await createPage.page.reload();
   });
 
-  test('Player see the list of created characters', { tag: '@list-character' }, async ({ createPage }) => {
+  test('Player see the list of created characters', async ({ createPage }) => {
     const qtyOfCharacters = arrayOf3Characters.length;
 
     await expect(createPage.createdCharactersList, 'Created characters list should be visible').toBeVisible();
@@ -27,7 +27,7 @@ test.describe('Displaying the character list', () => {
     ).toHaveCount(qtyOfCharacters);
   });
 
-  test('Player is able to see character details', { tag: '@cards-character' }, async ({ createPage }) => {
+  test('Player is able to see character details', async ({ createPage }) => {
     for (const { name } of arrayOf3Characters) {
       await expect(
         createPage.getSpecifiedCharacterCard(name).name,
@@ -51,23 +51,19 @@ test.describe('Displaying the character list', () => {
     }
   });
 
-  test(
-    'Card list is updated after creating a new character',
-    { tag: '@list-character-update' },
-    async ({ createPage }) => {
-      const newCharacter = new Character();
+  test('Card list is updated after creating a new character', async ({ createPage }) => {
+    const newCharacter = new Character();
 
-      await createPage.createCharacter(newCharacter);
+    await createPage.createCharacter(newCharacter);
 
-      await expect(
-        createPage.getSpecifiedCharacterCard(newCharacter.name).name,
-        'Recently created character card should be visible',
-      ).toBeVisible();
+    await expect(
+      createPage.getSpecifiedCharacterCard(newCharacter.name).name,
+      'Recently created character card should be visible',
+    ).toBeVisible();
 
-      await expect(
-        createPage.createdCharacterCards,
-        `There should be exactly ${arrayOf3Characters.length + 1} character cards`,
-      ).toHaveCount(arrayOf3Characters.length + 1);
-    },
-  );
+    await expect(
+      createPage.createdCharacterCards,
+      `There should be exactly ${arrayOf3Characters.length + 1} character cards`,
+    ).toHaveCount(arrayOf3Characters.length + 1);
+  });
 });

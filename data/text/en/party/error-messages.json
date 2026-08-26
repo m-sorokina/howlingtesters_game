@@ -1,17 +1,17 @@
 {
-  "classRequired": {
-    "title": "No class",
-    "message": "Choose a character class!",
-    "button": "Close"
-  },
-  "pointsRemaining": {
-    "title": "Points remaining",
-    "message": "Cannot create character. 15 points left to assign!",
-    "button": "Close"
-  },
-  "maxCharacters": {
-    "title": "Character limit",
-    "message": "You can have at most 4 characters. Remove one to add a new one.",
-    "button": "Close"
-  }
+  "errorTypes": [
+    { "type": "classRequired", "title": "No class", "message": "Choose a character class!", "button": "Close" },
+    {
+      "type": "pointsRemaining",
+      "title": "Points remaining",
+      "message": "Cannot create character. 15 points left to assign!",
+      "button": "Close"
+    },
+    {
+      "type": "maxCharacters",
+      "title": "Character limit",
+      "message": "You can have at most 4 characters. Remove one to add a new one.",
+      "button": "Close"
+    }
+  ]
 }

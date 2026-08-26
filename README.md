@@ -33,12 +33,6 @@ npm run test:debug    # debug mode
 npm run report        # open the last HTML report
 ```
 
-Run a subset by tag (tests are tagged with `{ tag: '@...' }`):
-
-```bash
-npx playwright test --grep @create-character
-```
-
 ## Project structure
 
 ```

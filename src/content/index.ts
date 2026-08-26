@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import type { PartyGeneral, CreateCharacterForm, CharacterList, ErrorMessages } from '@types';
 
 const locale = process.env.LOCALE ?? 'en';
 const partyDir = path.join(__dirname, '..', '..', 'data', 'text', locale);
@@ -9,9 +10,8 @@ function loadPartyFile<T>(fileName: string): T {
 }
 
 export const content = {
-  partyGeneral: loadPartyFile<typeof import('@data/text/en/party/party-general.json')>('party/party-general'),
-  createCharacterForm:
-    loadPartyFile<typeof import('@data/text/en/party/create-character-form.json')>('party/create-character-form'),
-  characterList: loadPartyFile<typeof import('@data/text/en/party/character-list.json')>('party/character-list'),
-  errorMessages: loadPartyFile<typeof import('@data/text/en/party/error-messages.json')>('party/error-messages'),
-};
+  partyGeneral: loadPartyFile<PartyGeneral>('party/party-general'),
+  createCharacterForm: loadPartyFile<CreateCharacterForm>('party/create-character-form'),
+  characterList: loadPartyFile<CharacterList>('party/character-list'),
+  errorMessages: loadPartyFile<{ errorTypes: ErrorMessages }>('party/error-messages').errorTypes,
+} as const;
