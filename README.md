@@ -54,7 +54,7 @@ docs/                    # user stories the tests are based on
 
 Configured in `tsconfig.json`, one per `src/` folder:
 
-`@pages`, `@components`, `@fixtures/*`, `@models`, `@helpers/*`, `@consts`, `@consts/*`, `@config/*`, `@types`, plus `@data/*` for the root `data/` folder.
+`@pages`, `@components`, `@fixtures`, `@models`, `@helpers`, `@consts`, `@config`, `@types`, `@assertions`, `@content`, plus `@data/*` for the root `data/` folder.
 
 ## Code quality
 
