@@ -1,0 +1,9 @@
+{
+  "fightTeamHeader": {
+    "headerTitle": "Your Team"
+  },
+  "fightButton": "Fight",
+  "fightWithoutMusic": "Fight without music",
+  "backToCreatorButton": "Back to creator",
+  "drawNextOpponentButton": "Draw next opponent"
+}
