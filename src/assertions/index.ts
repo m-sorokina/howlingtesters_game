@@ -1,7 +1,7 @@
-export { assertCharacterCardDetails, assertCharacterCardQuantity } from './character.assertions';
+export { assertCharacterCardDetails, assertCharacterCardQuantity, assertCharacterCard } from './character.assertions';
 
 export { assertStatPointsToSpend, assertTotalDistributedPoints } from './distribution-points.assertions';
 
-export { assertPopup } from './popup.assertions';
+export { assertErrorPopupContent } from './popup.assertions';
 
-export { assertElementVisibility } from './general.assertions';
+export { assertElementVisibility, assertImageVisibility } from './general.assertions';

@@ -72,9 +72,9 @@ Metoda domyślnie czeka na `visible`, a caller i tak często przekazuje znowu `{
 
 ---
 
-### 5. Lokatory oparte o tekst
+~~### 5. Lokatory oparte o tekst~~
 
-**Plik:** `[src/components/character.component.ts](../src/components/character.component.ts)` (ok. L18)
+~~**Plik:** `[src/components/character.component.ts](../src/components/character.component.ts)` (ok. L18)~~
 
 `getByText(/Race:/)` / `Class:` — kruche przy zmianie copy lub lokalizacji. Takie lokatory „blokują” łatwą zmianę UI. Dla mnie struktura z trzymaniem lokatorów w getach jest mało czytelna i może prowadzić do szybkiego puchnięcia Page Objects.
 
@@ -82,7 +82,7 @@ Metoda domyślnie czeka na `visible`, a caller i tak często przekazuje znowu `{
 
 ---
 
-### 6. Brakujące `index.ts`
+~~### 6. Brakujące `index.ts`~~
 
 W części katalogów są barrel exports (`components`, `pages`, `types`, `models`), w innych nie (`helpers`, `consts`, `fixtures`, `config`).
 
@@ -98,7 +98,7 @@ Funkcja zmienia przekazany obiekt `stats` w miejscu (side-effect). Łatwo o nies
 
 ---
 
-### 8. API `createCharacter` na page
+~~### 8. API `createCharacter` na page~~
 
 **Plik:** `[src/pages/create-team.page.ts](../src/pages/create-team.page.ts)` (ok. L44)
 
@@ -113,7 +113,7 @@ W testach raz używasz facade’a page, a raz ręcznie wypełniasz formularz kro
 
 ---
 
-### 9. Asercje w specu + brak wspólnego pliku asercji
+~~### 9. Asercje w specu + brak wspólnego pliku asercji~~
 
 **Plik:** `[tests/create-character.spec.ts](../tests/create-character.spec.ts)` (ok. L12–L13)
 
@@ -123,7 +123,7 @@ Lokalny `assertCreatedCharacter` miesza setup testu z warstwą asercji. Część
 
 ---
 
-### 10. Wielokrotne szukanie tej samej listy postaci
+~~### 10. Wielokrotne szukanie tej samej listy postaci~~
 
 **Plik:** `[tests/create-character.spec.ts](../tests/create-character.spec.ts)` (ok. L96)
 
@@ -158,7 +158,7 @@ Jeśli popup zostaje na ekranie, często wystarczy `click()` + `expect(...).toHa
 
 ---
 
-### 13. Nazwa testu nie pokrywa się z jego działaniem
+~~### 13. Nazwa testu nie pokrywa się z jego działaniem~~
 
 **Plik:** `[tests/create-character.spec.ts](../tests/create-character.spec.ts)` (ok. L53)
 
@@ -170,7 +170,7 @@ Nazwa mówi o **widoczności** opcji w formularzu. Test robi coś innego: iteruj
 
 ---
 
-### 14. Dużo testów, a brak jednego spójnego scenariusza
+~~### 14. Dużo testów, a brak jednego spójnego scenariusza~~
 
 **Pliki:**
 

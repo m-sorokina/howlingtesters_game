@@ -1,11 +1,9 @@
 import { RACES, CLASSES, STAT_POINTS, MAX_CHARACTERS } from '@consts';
 import { test, expect } from '@fixtures';
-import { Character } from '@models';
-import { distributePoints } from '@helpers';
+import { distributePoints, createRandomCharacter } from '@helpers';
 import type { Stats } from '@types';
 import {
-  assertCharacterCardDetails,
-  assertElementVisibility,
+  assertCharacterCard,
   assertCharacterCardQuantity,
   assertStatPointsToSpend,
   assertTotalDistributedPoints,
@@ -17,13 +15,12 @@ const { headerTitle, headerText } = content.partyGeneral.createTeamHeader;
 test.describe('Creating a character', () => {
   test('Player is able to create up to 4 characters', async ({ createPage }) => {
     for (let i = 0; i < MAX_CHARACTERS; i++) {
-      const character = new Character(undefined, RACES[i], CLASSES[i]);
+      const character = createRandomCharacter({ race: RACES[i], charClass: CLASSES[i] });
       await createPage.createCharacter(character);
-      const createdCharacter = createPage.getSpecifiedCharacterCard(character.name);
+      const createdCharacter = createPage.characterList.getSpecifiedCharacterCard(character.name);
 
-      await assertCharacterCardQuantity(createPage.createdCharacterCards, i + 1);
-      await assertElementVisibility(createdCharacter.name);
-      assertCharacterCardDetails(character, await createdCharacter.getDetails());
+      await assertCharacterCardQuantity(createPage.characterList.characterCards, i + 1);
+      await assertCharacterCard(character, createdCharacter);
     }
   });
 

@@ -14,3 +14,13 @@ export async function assertElementVisibility(element: Locator, state: State = '
       throw new Error(`Unexpected element state: ${state}`);
   }
 }
+
+export async function assertImageVisibility(image: Locator, alt?: string) {
+  await expect(image, 'Image should be visible').toBeVisible();
+  if (alt) {
+    await expect(image, `Image should have an 'alt' attribute with value: ${alt}`).toHaveAttribute('alt', alt);
+  }
+  await expect
+    .poll(() => image.evaluate((img: HTMLImageElement) => img.naturalWidth), 'Image should be loaded')
+    .toBeGreaterThan(0);
+}

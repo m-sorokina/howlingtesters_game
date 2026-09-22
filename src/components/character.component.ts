@@ -10,13 +10,17 @@ export class CharacterComponent {
   readonly container: Locator;
 
   constructor(container: Locator, name: string) {
-    this.container = container
-      .locator('.details')
-      .filter({ has: container.page().getByRole('heading', { name, exact: true }) });
+    this.container = container.filter({
+      has: container.page().getByRole('heading', { name, exact: true }),
+    });
   }
 
   get removeButton(): Locator {
     return this.container.locator('button[onclick^="removeCharacter"]');
+  }
+
+  get image(): Locator {
+    return this.container.getByRole('img');
   }
 
   get name(): Locator {
@@ -24,22 +28,26 @@ export class CharacterComponent {
   }
 
   get race(): Locator {
-    return this.container.getByText(new RegExp(`^${raceLabel}`));
+    return this.getFieldByLabel(raceLabel);
   }
 
   get charClass(): Locator {
-    return this.container.getByText(new RegExp(`^${classLabel}`));
+    return this.getFieldByLabel(classLabel);
   }
 
   get stats(): Locator {
-    return this.container.locator('.stats-list li');
+    return this.container.locator('ul li');
+  }
+
+  private getFieldByLabel(label: string) {
+    return this.container.locator('p').filter({ hasText: new RegExp(`^\\s*${label}`) });
   }
 
   async getDetails(): Promise<Character> {
     const stats = {} as Stats;
-    const name = (await this.name.textContent())!;
-    const race = (await this.race.textContent())!.split(': ')[1];
-    const charClass = (await this.charClass.textContent())!.split(': ')[1];
+    const name = (await this.name.innerText())!;
+    const race = (await this.race.innerText()).split(': ')[1];
+    const charClass = (await this.charClass.innerText()).split(': ')[1];
     const statsList = (await this.stats.allTextContents())!;
     const statsValues = statsList.map((value) => value.split(': '));
     for (const value of statsValues) {

@@ -11,3 +11,14 @@ export type CharacterType = {
   charClass: Class;
   stats: Stats;
 };
+
+export type LocalStorageCharacter = {
+  name: string;
+  race: string;
+  charClass: string;
+  agility: number;
+  energy: number;
+  health: number;
+  imgSrc?: string;
+  strength: number;
+};
