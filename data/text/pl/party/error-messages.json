@@ -1,0 +1,23 @@
+{
+  "errorTypes": [
+    { "type": "classRequired", "title": "Brak klasy", "message": "Wybierz klasę postaci!", "button": "Zamknij" },
+    {
+      "type": "pointsRemaining",
+      "title": "Pozostałe punkty",
+      "message": "Nie można utworzyć postaci. Pozostało 15 punktów do przydzielenia!",
+      "button": "Zamknij"
+    },
+    {
+      "type": "maxCharacters",
+      "title": "Limit postaci",
+      "message": "Możesz mieć maksymalnie 4 postacie. Usuń jedną, aby dodać nową.",
+      "button": "Zamknij"
+    },
+    {
+      "type": "duplicateName",
+      "title": "Zduplikowana nazwa",
+      "message": "Postać o tej nazwie już istnieje! Wybierz inną nazwę.",
+      "button": "Zamknij"
+    }
+  ]
+}

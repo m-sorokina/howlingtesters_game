@@ -1,18 +1,20 @@
-import { CharacterComponent, CreateCharacterComponent, MessagePopupComponent } from '@components';
+import { CreateCharacterComponent, MessagePopupComponent, CharacterList } from '@components';
 import type { CharacterType } from '@types';
 import { BasePage } from '@pages';
 import type { Page, Locator } from '@playwright/test';
-import { routes } from '@consts/routes';
+import { routes } from '@consts';
 
 export class CreateTeam extends BasePage {
+  readonly url = routes.createCharacter;
   public createCharacterForm: CreateCharacterComponent;
   public messagePopup: MessagePopupComponent;
-  readonly url = routes.createCharacter;
+  public characterList: CharacterList;
 
   constructor(page: Page) {
     super(page);
     this.createCharacterForm = new CreateCharacterComponent(this.page.locator('#character-creator'));
     this.messagePopup = new MessagePopupComponent(this.page.locator('#popup'));
+    this.characterList = new CharacterList(page.locator('#character-list'));
   }
 
   get createTeamHeader(): Locator {
@@ -31,20 +33,7 @@ export class CreateTeam extends BasePage {
     return this.page.locator('#go-to-fight');
   }
 
-  get createdCharactersList(): Locator {
-    return this.page.locator('#character-list');
-  }
-
-  get createdCharacterCards(): Locator {
-    return this.createdCharactersList.locator('.character-card');
-  }
-
-  async createCharacter(characterToCreate: CharacterType): Promise<CharacterComponent> {
+  async createCharacter(characterToCreate: CharacterType): Promise<void> {
     await this.createCharacterForm.createCharacter(characterToCreate);
-    return new CharacterComponent(this.createdCharacterCards, characterToCreate.name);
-  }
-
-  getSpecifiedCharacterCard(name: string): CharacterComponent {
-    return new CharacterComponent(this.createdCharacterCards, name);
   }
 }

@@ -1,0 +1,16 @@
+{
+  "formHeader": "Stwórz swoją postać",
+  "nameInputLabel": "Imię postaci:",
+  "nameInputPlaceholder": "Wpisz imię...",
+  "raceSelectLabel": "Rasa:",
+  "classSelectLabel": "Wybierz klasę:",
+  "stats": {
+    "statsHeader": "Statystyki postaci",
+    "pointsToSpend": "Punkty do wydania:",
+    "strength": "Siła",
+    "agility": "Zwinność",
+    "energy": "Energia",
+    "health": "Zdrowie"
+  },
+  "addCharacterButton": "Dodaj postać"
+}

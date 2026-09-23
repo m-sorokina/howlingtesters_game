@@ -1,0 +1,16 @@
+{
+  "formHeader": "Create your character",
+  "nameInputLabel": "Character name:",
+  "nameInputPlaceholder": "Enter name...",
+  "raceSelectLabel": "Race:",
+  "classSelectLabel": "Choose class:",
+  "stats": {
+    "statsHeader": "Character stats",
+    "pointsToSpend": "Points to spend:",
+    "strength": "Strength",
+    "agility": "Agility",
+    "energy": "Energy",
+    "health": "Health"
+  },
+  "addCharacterButton": "Add character"
+}

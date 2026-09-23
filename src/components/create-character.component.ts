@@ -1,12 +1,9 @@
 import type { Locator } from '@playwright/test';
-import { BaseComponent } from '@components';
 import type { Race, Class, Stats, CharacterType } from '@types';
-import { STAT_KEYS } from '@consts/const';
+import { STAT_KEYS } from '@consts';
 
-export class CreateCharacterComponent extends BaseComponent {
-  constructor(locator: Locator) {
-    super(locator);
-  }
+export class CreateCharacterComponent {
+  constructor(readonly locator: Locator) {}
 
   get formHeader(): Locator {
     return this.locator.getByRole('heading', { level: 2 });
@@ -62,20 +59,28 @@ export class CreateCharacterComponent extends BaseComponent {
     }
   }
 
-  async createCharacter(characterToCreate: CharacterType): Promise<void> {
+  async fillCharacter(
+    characterToCreate: CharacterType,
+    options?: { addClass?: boolean; addStats?: boolean },
+  ): Promise<void> {
     await this.enterCharacterName(characterToCreate.name);
     await this.selectRace(characterToCreate.race);
-    await this.selectClass(characterToCreate.charClass);
-    await this.setStats(characterToCreate.stats);
+    if (options && options.addClass) {
+      await this.selectClass(characterToCreate.charClass);
+    }
+    if (options && options.addStats) {
+      await this.setStats(characterToCreate.stats);
+    }
+  }
+
+  async createCharacter(characterToCreate: CharacterType): Promise<void> {
+    await this.fillCharacter(characterToCreate, { addClass: true, addStats: true });
     await this.addCharacterButton.click();
   }
 
   async getStatOptionsValues(): Promise<Stats> {
     const entries = await Promise.all(
-      STAT_KEYS.map(async (key) => {
-        const value = await this.getStatsInput(key).inputValue();
-        return [key, Number(value)];
-      }),
+      STAT_KEYS.map(async (key) => [key, Number(await this.getStatsInput(key).inputValue())]),
     );
     return Object.fromEntries(entries) as Stats;
   }

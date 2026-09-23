@@ -1,0 +1,14 @@
+{
+  "createdCharactersHeader": "Your characters",
+  "characterCard": {
+    "raceLabel": "Race:",
+    "classLabel": "Class:",
+    "stats": {
+      "strength": "Strength:",
+      "agility": "Agility:",
+      "energy": "Energy:",
+      "health": "Health:"
+    },
+    "removeButton": "Remove"
+  }
+}
