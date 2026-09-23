@@ -3,3 +3,5 @@ export type CreateCharacterForm = typeof import('@data/text/en/party/create-char
 export type CharacterList = typeof import('@data/text/en/party/character-list.json');
 export type ErrorMessages = (typeof import('@data/text/en/party/error-messages.json'))['errorTypes'];
 export type ErrorMessage = ErrorMessages[0];
+export type DragonCard = typeof import('@data/text/en/fight/dragon-card.json');
+export type FightGeneral = typeof import('@data/text/en/fight/fight-general.json');
