@@ -1,6 +1,6 @@
 import type { Stats } from '@types';
 import { faker } from '@faker-js/faker';
-import { STAT_MIN, STAT_MAX_FOR_OPTION, STAT_KEYS } from '@consts/const';
+import { STAT_MIN, STAT_MAX_FOR_OPTION, STAT_KEYS } from '@consts';
 
 export function distributePoints(pointsToDistribute: number, stats: Stats): Stats {
   while (pointsToDistribute > 0) {

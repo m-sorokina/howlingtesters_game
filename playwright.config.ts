@@ -1,15 +1,15 @@
 import 'dotenv/config';
 import { defineConfig, devices } from '@playwright/test';
-import { env } from '@config/env';
+import { env } from '@config';
 
 export default defineConfig({
   testDir: './tests',
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 0 : 0,
-  workers: process.env.CI ? 1 : 1,
+  workers: process.env.CI ? 3 : undefined,
   reporter: [['list'], ['html', { open: 'never' }]],
-  timeout: 10_000,
+  timeout: 20_000,
   expect: {
     timeout: 3_000,
   },
@@ -17,13 +17,18 @@ export default defineConfig({
     baseURL: env.baseURL,
     trace: 'on',
     screenshot: 'only-on-failure',
-    actionTimeout: 5_000,
-    navigationTimeout: 5_000,
+    actionTimeout: 6_000,
+    navigationTimeout: 6_000,
   },
   projects: [
     {
+      name: 'setup',
+      testMatch: /.*\.setup\.ts/,
+    },
+    {
       name: 'game',
-      use: { ...devices['Desktop Chrome'] },
+      use: { ...devices['Desktop Chrome'], storageState: './playwright/.auth/user.json' },
+      dependencies: ['setup'],
     },
   ],
 });

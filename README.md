@@ -33,12 +33,6 @@ npm run test:debug    # debug mode
 npm run report        # open the last HTML report
 ```
 
-Run a subset by tag (tests are tagged with `{ tag: '@...' }`):
-
-```bash
-npx playwright test --grep @create-character
-```
-
 ## Project structure
 
 ```
@@ -60,7 +54,7 @@ docs/                    # user stories the tests are based on
 
 Configured in `tsconfig.json`, one per `src/` folder:
 
-`@pages`, `@components`, `@fixtures/*`, `@models`, `@helpers/*`, `@consts/*`, `@config/*`, `@types`, plus `@data/*` for the root `data/` folder.
+`@pages`, `@components`, `@fixtures`, `@models`, `@helpers`, `@consts`, `@config`, `@types`, `@assertions`, `@content`, plus `@data/*` for the root `data/` folder.
 
 ## Code quality
 

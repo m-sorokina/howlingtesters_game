@@ -1,4 +1,4 @@
-import { RACES, CLASSES, STAT_KEYS } from '@consts/const';
+import { RACES, CLASSES, STAT_KEYS } from '@consts';
 export type Race = (typeof RACES)[number];
 
 export type Class = (typeof CLASSES)[number];
@@ -10,4 +10,15 @@ export type CharacterType = {
   race: Race;
   charClass: Class;
   stats: Stats;
+};
+
+export type LocalStorageCharacter = {
+  name: string;
+  race: string;
+  charClass: string;
+  agility: number;
+  energy: number;
+  health: number;
+  imgSrc?: string;
+  strength: number;
 };

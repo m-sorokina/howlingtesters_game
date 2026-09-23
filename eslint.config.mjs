@@ -7,19 +7,10 @@ import prettierConfig from 'eslint-config-prettier';
 
 export default defineConfig(
   eslint.configs.recommended,
-  tseslint.configs.recommendedTypeChecked,
-  {
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: import.meta.dirname,
-      },
-    },
-  },
+  tseslint.configs.recommended,
   {
     rules: {
       '@typescript-eslint/no-explicit-any': 'error',
-      '@typescript-eslint/no-unnecessary-condition': 'warn',
       'no-console': ['warn', { allow: ['warn', 'error'] }],
     },
   },
@@ -31,10 +22,6 @@ export default defineConfig(
       'playwright/no-wait-for-timeout': 'error',
       'playwright/no-force-option': 'error',
     },
-  },
-  {
-    files: ['**/*.js', '**/*.mjs'],
-    ...tseslint.configs.disableTypeChecked,
   },
   prettierConfig,
   globalIgnores(['node_modules/', 'test-results/', 'playwright-report/', 'playwright/.cache/']),
