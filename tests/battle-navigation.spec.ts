@@ -2,7 +2,7 @@ import { test } from '@fixtures';
 import arrayOf4Characters from '@data/preseed-party-4-characters.json';
 import { assertCharacterCard, assertCharacterCardQuantity, assertElementVisibility } from '@assertions';
 import { BattlePage } from '@pages';
-import { getCharacterFromLocalStorageData } from '@helpers';
+import { getCharacterFromLocalStorageData, withRaceBonus } from '@helpers';
 
 test.describe('Battle management', () => {
   test.beforeEach(async ({ createPage }) => {
@@ -11,7 +11,7 @@ test.describe('Battle management', () => {
   });
 
   test('Player is able to navigate to the battle page', async ({ createPage, page }) => {
-    const charactersCreated = arrayOf4Characters.map((c) => getCharacterFromLocalStorageData(c));
+    const charactersCreated = arrayOf4Characters.map(getCharacterFromLocalStorageData).map(withRaceBonus);
     const battlePage = new BattlePage(page);
     await createPage.goToBattleButton.click();
     await assertElementVisibility(battlePage.battleTeam.container);

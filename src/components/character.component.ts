@@ -1,8 +1,8 @@
 import type { Locator } from '@playwright/test';
 import { content } from '@content';
-import type { Race, Class, Stats } from '@types';
+import type { Race, Class } from '@types';
 import { Character } from '@models';
-import { STAT_KEYS } from '@consts';
+import { getStatsDetails } from '@helpers';
 
 const { raceLabel, classLabel } = content.characterList.characterCard;
 
@@ -44,20 +44,11 @@ export class CharacterComponent {
   }
 
   async getDetails(): Promise<Character> {
-    const stats = {} as Stats;
     const name = (await this.name.innerText())!;
     const race = (await this.race.innerText()).split(': ')[1];
     const charClass = (await this.charClass.innerText()).split(': ')[1];
     const statsList = (await this.stats.allTextContents())!;
-    const statsValues = statsList.map((value) => value.split(': '));
-    for (const value of statsValues) {
-      const [k, v] = value;
-      for (const [, key] of STAT_KEYS.entries()) {
-        if (key === k?.toLowerCase()) {
-          stats[key] = Number(v);
-        }
-      }
-    }
-    return new Character(name, race as Race, charClass as Class, stats as Stats);
+    const stats = getStatsDetails(statsList);
+    return new Character(name, race as Race, charClass as Class, stats);
   }
 }

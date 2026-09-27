@@ -1,6 +1,6 @@
 import { BasePage } from '@pages';
 import type { Page, Locator } from '@playwright/test';
-import { routes } from '@consts';
+import { routes, MAX_BATTLE_DURATION } from '@consts';
 import { BattleControls, BattleTeam, DragonComponent } from '@components';
 
 export class BattlePage extends BasePage {
@@ -28,6 +28,10 @@ export class BattlePage extends BasePage {
     return this.page.locator('#back-btn');
   }
 
+  get backToCreatorButtonAfterBattle(): Locator {
+    return this.page.locator('#back-after-battle-btn');
+  }
+
   get logPanel(): Locator {
     return this.page.locator('#battle-log');
   }
@@ -38,5 +42,10 @@ export class BattlePage extends BasePage {
 
   get drawNextOpponentButton(): Locator {
     return this.page.locator('#draw-next-opponent-btn');
+  }
+
+  async waitForBattleEnd(): Promise<void> {
+    await this.battleControls.skipBattleButton.waitFor({ state: 'visible' });
+    await this.battleControls.skipBattleButton.waitFor({ state: 'hidden', timeout: MAX_BATTLE_DURATION });
   }
 }

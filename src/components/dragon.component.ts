@@ -1,4 +1,6 @@
 import type { Locator } from '@playwright/test';
+import { getStatsDetails } from '@helpers';
+import { Dragon } from '@models';
 
 export class DragonComponent {
   readonly container: Locator;
@@ -11,7 +13,7 @@ export class DragonComponent {
   }
 
   get stats(): Locator {
-    return this.container.locator('#dragon-stats-list');
+    return this.container.locator('#dragon-stats-list li');
   }
 
   get energy(): Locator {
@@ -20,5 +22,11 @@ export class DragonComponent {
 
   get health(): Locator {
     return this.container.locator('#dragon-hp-display');
+  }
+
+  async getDetails(): Promise<Dragon> {
+    const statsList = (await this.stats.allTextContents())!;
+    const stats = getStatsDetails(statsList);
+    return new Dragon(stats);
   }
 }
