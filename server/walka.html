@@ -1,0 +1,710 @@
+<section class="team-display">
+    <h1 id="team-title">Your Team</h1>
+  
+    <div id="team-container" class="team-container"></div>
+  
+    <div class="team-buttons" id="buttons-top">
+      <button id="draw-btn">🎲 Draw opponent</button>
+    </div>
+  
+    <div class="team-buttons" id="buttons-bottom" style="display:none;">
+      <button id="fight-btn" disabled>⚔️ Fight!</button>
+      <button id="fight-no-music-btn" disabled type="button">⚔️ Fight without music</button>
+      <button id="back-btn">← Back to creator</button>
+    </div>
+  
+    <div id="battle-log" style="display:none; margin-top:20px; font-size:1.2rem; color:#e06f7c; font-weight:bold; max-width:600px; margin:auto;"></div>
+  
+    <div id="dragon-panel" class="dragon-panel" style="display: none;">
+      <div class="dragon-panel-inner">
+        <img id="dragon-img" src="https://howlingtesters.pl/wp-content/uploads/2026/02/x7Ej1f6pSXyRW1i7QS7PzA.jpg" alt="Dragon">
+        <ul id="dragon-stats-list"></ul>
+      </div>
+    </div>
+    <div id="battle-controls" class="battle-controls" style="display:none;">
+      <button id="skip-battle-btn" type="button">⏭ Skip battle</button>
+      <button id="mute-music-btn" type="button">🔇 Mute music</button>
+    </div>
+    <div id="end-of-battle-buttons" class="team-buttons" style="display:none;">
+      <button id="back-after-battle-btn" type="button">← Back to creator</button>
+      <button id="draw-next-opponent-btn" type="button">🎲 Draw next opponent</button>
+    </div>
+    <p id="battle-music-credit" class="battle-music-credit" style="display:none;">
+      Five Armies by Kevin MacLeod is licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">Creative Commons Attribution 4.0</a>.
+      <a href="http://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100875" target="_blank" rel="noopener">Source</a>.
+      <a href="http://incompetech.com/" target="_blank" rel="noopener">Artist</a>.
+    </p>
+    <div id="battle-popup" class="battle-popup">
+      <div class="battle-popup-content">
+        <h3 id="battle-popup-title">Message</h3>
+        <p id="battle-popup-message"></p>
+        <button id="battle-popup-close" type="button">Close</button>
+      </div>
+    </div>
+  </section>
+  
+  <style>
+  body {
+    background: #0c1412;
+    font-family: "Poppins", sans-serif;
+    color: #e0ebe7;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    text-align: left;
+  }
+  #team-title { width:100%; text-align:center; color:#4fa58a; text-shadow:0 0 25px rgba(79,165,138,0.5); margin:40px 0; font-size:2.8rem; letter-spacing:1px; }
+  .team-container { display:flex; flex-wrap:wrap; justify-content:center; gap:25px; margin-bottom:40px; }
+  .character-card { background:rgba(10,20,17,0.9); border:1px solid #263b34; border-radius:15px; padding:18px; width:240px; color:#dce7e3; text-align:center; box-shadow:0 0 15px rgba(15,30,25,0.6); transition:0.4s; font-size:0.9rem; position: relative; }
+  .character-card:hover { transform:scale(1.03); box-shadow:0 0 25px rgba(79,165,138,0.3); }
+  .character-card img { width:120px; height:120px; margin-bottom:10px; border-radius:10px; border:1px solid #4fa58a; box-shadow:0 0 10px rgba(79,165,138,0.3); position: relative; }
+  .character-card h4 { color:#4fa58a; margin-bottom:8px; font-size:1.1rem; }
+  .character-card p { margin:3px 0; font-size:0.95rem; }
+  .character-card p strong { color:#6ac3a5; }
+  .character-card ul { text-align:left; padding-left:20px; margin-top:10px; font-size:0.9rem; line-height:1.4; color:#cfe4dc; }
+  
+  .team-buttons { display:flex; justify-content:center; gap:20px; margin-bottom:20px; }
+  button { background: linear-gradient(90deg, #223730, #4fa58a); border:none; color:#e8f7f0; padding:14px 36px; font-size:1.1rem; border-radius:12px; cursor:pointer; transition:0.3s; box-shadow:0 0 10px rgba(79,165,138,0.25); }
+  button:hover { background: linear-gradient(90deg, #2e4c43, #6ac3a5); color:#fff; box-shadow:0 0 25px rgba(79,165,138,0.35); transform:scale(1.07); }
+  
+  .dragon-panel { margin:20px auto; padding:20px; background: rgba(10,20,17,0.9); border:1px solid #263b34; border-radius:15px; max-width:520px; box-shadow:0 0 20px rgba(79,165,138,0.5); }
+  .dragon-panel-inner { display:flex; align-items:center; gap:20px; text-align:left; }
+  .dragon-panel-inner img { width:180px; height:180px; object-fit:cover; border-radius:10px; border:1px solid #4fa58a; flex-shrink:0; }
+  .dragon-panel-inner ul { margin:0; padding-left:20px; list-style:none; font-size:1rem; color:#cfe4dc; }
+  #battle-log { text-align:center; margin-top:12px; padding:10px 16px; font-size:1rem; color:#cfe4dc; border:1px solid #263b34; border-radius:8px; background:rgba(10,20,17,0.6); min-height:2em; }
+  .battle-music-credit { font-size:0.75rem; color:#8a9d96; margin-top:16px; margin-bottom:20px; text-align:center; max-width:600px; margin-left:auto; margin-right:auto; line-height:1.4; }
+  .battle-music-credit a { color:#6ac3a5; }
+  
+  @keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+  @keyframes shakeReaction { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 50% { transform: translateX(6px); } 75% { transform: translateX(-3px); } }
+  .shake-reaction { animation: shakeReaction 0.35s ease-in-out; }
+  @keyframes victoryJump { 0%, 33.33%, 66.67%, 100% { transform: translateY(0); } 16.67%, 50%, 83.33% { transform: translateY(-28px); } }
+  .victory-jump { animation: victoryJump 1.4s ease-in-out; }
+  @keyframes dragonCelebrate { 0%, 25%, 50%, 75%, 100% { transform: scale(1) translateY(0); } 12.5%, 37.5%, 62.5%, 87.5% { transform: scale(1.08) translateY(-8px); } }
+  .dragon-celebrate { animation: dragonCelebrate 1.2s ease-in-out; }
+  @keyframes stadiumWaveUp { 0% { transform: translateY(0); } 100% { transform: translateY(-18px); } }
+  @keyframes stadiumWaveDown { 0% { transform: translateY(-18px); } 100% { transform: translateY(0); } }
+  .stadium-wave-up { animation: stadiumWaveUp 0.5s ease-out both; }
+  .stadium-wave-down { animation: stadiumWaveDown 0.5s ease-in both; }
+  .battle-popup { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); justify-content:center; align-items:center; z-index:1000; }
+  .battle-popup.show { display:flex; }
+  .battle-popup-content { background:rgba(10,20,17,0.95); color:#d4e4df; padding:30px; border-radius:15px; text-align:center; max-width:400px; box-shadow:0 0 20px rgba(79,165,138,0.3); border:1px solid #263b34; }
+  .battle-popup-content h3 { color:#4fa58a; margin:0 0 15px 0; }
+  .battle-popup-content p { margin:0 0 20px 0; line-height:1.5; }
+  .battle-popup-content button { margin-top:0; }
+  .battle-controls { display:flex; justify-content:center; gap:16px; margin:16px auto; flex-wrap:wrap; }
+  .battle-controls button { padding:10px 20px; font-size:0.95rem; }
+  </style>
+  
+  <script>
+  const teamContainer = document.getElementById("team-container");
+  const battlePopup = document.getElementById("battle-popup");
+  const battlePopupTitle = document.getElementById("battle-popup-title");
+  const battlePopupMessage = document.getElementById("battle-popup-message");
+  const battlePopupClose = document.getElementById("battle-popup-close");
+  function showBattlePopup(title, message) {
+    battlePopupTitle.textContent = title || "Message";
+    battlePopupMessage.textContent = message || "";
+    battlePopup.classList.add("show");
+  }
+  if (battlePopupClose) battlePopupClose.addEventListener("click", function() { battlePopup.classList.remove("show"); });
+  if (battlePopup) battlePopup.addEventListener("click", function(e) { if (e.target === battlePopup) battlePopup.classList.remove("show"); });
+  // Battle log typing speed (ms per character)
+  const BATTLE_LOG_TYPING_MS = 25;
+  const DRAGON_API = "http://localhost:3000/dragon-api/v1/stats";
+  function getCharactersFromStorage() {
+    try {
+      var raw = localStorage.getItem("characters");
+      if (raw == null || raw === '') return [];
+      return JSON.parse(raw) || [];
+    } catch (e) {
+      console.warn('getCharactersFromStorage:', e);
+      return [];
+    }
+  }
+  function escapeHtml(s) {
+    if (s == null || s === undefined) return '';
+    var str = String(s);
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function applyRaceBonuses(characters) {
+    (characters || []).forEach(ch => {
+      const race = (ch.race || '').toLowerCase();
+      const isHuman = race === 'human' || race === 'człowiek' || race === 'czlowiek';
+      const isElf = race === 'elf';
+      const isOrc = race === 'orc' || race === 'ork';
+      const isDwarf = race === 'dwarf' || race === 'krasnolud';
+      if (isHuman) ch.strength = (Number(ch.strength) || 0) + 2;
+      if (isElf) ch.energy = (Number(ch.energy) || 0) + 2;
+      if (isOrc) ch.strength = (Number(ch.strength) || 0) + 2;
+      if (isDwarf) ch.health = (Number(ch.health) || 0) + 2;
+    });
+  }
+  let aliveCharacters = JSON.parse(JSON.stringify(getCharactersFromStorage()));
+  applyRaceBonuses(aliveCharacters);
+  let dragon = null;
+  let dragonBattle = null;
+  let currentBattleMusic = null;
+  let battleFastMode = false;
+  let battleMusicOn = false;
+  // Battle sounds – played only when battle music is on; at attack start
+  const SOUND_ATTACK_WARRIOR = 'https://howlingtesters.pl/wp-content/uploads/2026/02/wojownik.mp3';
+  const SOUND_ATTACK_ROGUE = 'https://howlingtesters.pl/wp-content/uploads/2026/02/lotrzyk.mp3';
+  const SOUND_ATTACK_MAGE = 'https://howlingtesters.pl/wp-content/uploads/2026/02/zwiadowca.mp3';
+  const SOUND_ATTACK_SCOUT = 'https://howlingtesters.pl/wp-content/uploads/2026/02/mage.mp3';
+  const SOUND_ATTACK_DRAGON = 'https://howlingtesters.pl/wp-content/uploads/2026/02/smok-atak-ciszej.mp3';
+  const SOUND_DRAGON_FIRE_BREATH = 'https://howlingtesters.pl/wp-content/uploads/2026/02/fire-brath.mp3';
+  const SOUND_VICTORY = 'https://howlingtesters.pl/wp-content/uploads/2026/02/win.mp3';
+  const SOUND_DEFEAT = 'https://howlingtesters.pl/wp-content/uploads/2026/02/smok-win.mp3';
+  let battleEndSoundPlayed = false;
+  let currentAttackAudio = null;
+  function playBattleSound(url) {
+    if (!url || !battleMusicOn) return;
+    const a = new Audio(url);
+    a.play().catch(function(){});
+  }
+  function playBattleSoundOnce(url) {
+    if (!url || !battleMusicOn || battleEndSoundPlayed) return;
+    battleEndSoundPlayed = true;
+    const a = new Audio(url);
+    a.play().catch(function(){});
+  }
+  function playAttackSound(url) {
+    if (!url || !battleMusicOn) return;
+    if (currentAttackAudio) { try { currentAttackAudio.pause(); currentAttackAudio.currentTime = 0; } catch(e){} }
+    currentAttackAudio = new Audio(url);
+    currentAttackAudio.play().catch(function(){});
+  }
+  
+  function renderTeam(characters) {
+    const toRender = characters || aliveCharacters;
+    teamContainer.innerHTML = '';
+    toRender.forEach(ch=>{
+      const card = document.createElement("div");
+      card.classList.add("character-card");
+      card.dataset.name = ch.name;
+      const agility = ch.agility ?? ch.dexterity;
+      card.innerHTML = `
+        <img src="${ch.imgSrc || ''}" alt="${ch.charClass || ''}">
+        <h4>${ch.name}</h4>
+        <p><strong>Race:</strong> ${ch.race}</p>
+        <p><strong>Class:</strong> ${ch.charClass}</p>
+        <ul>
+          <li>Strength: ${ch.strength}</li>
+          <li>Agility: ${agility}</li>
+          <li>Energy: <span class="energy">${ch.energy}</span></li>
+          <li>Health: <span class="hp">${ch.health}</span></li>
+        </ul>
+      `;
+      teamContainer.appendChild(card);
+    });
+  }
+  renderTeam();
+  
+  document.getElementById("back-btn").addEventListener("click",()=>window.location.href="/kreator.html");
+  
+  function rollDice(){return Math.floor(Math.random()*20)+1;}
+  // Safe random when min/max are formulas – range always valid
+  function randomInRange(lo, hi){
+    const a = Math.min(Number(lo) || 0, Number(hi) || 0);
+    const b = Math.max(Number(lo) || 0, Number(hi) || 0);
+    const range = Math.max(1, b - a + 1);
+    return Math.floor(Math.random() * range) + a;
+  }
+  // Attack stat depends on class; Mage uses base energy (not current)
+  function getCharacterAttackStat(ch){
+    const cls = (ch.charClass || '').toLowerCase();
+    const ag = Number(ch.agility ?? ch.dexterity) || 0;
+    switch(cls){
+      case 'warrior': case 'wojownik': return Math.max(0, Number(ch.strength) || 0);
+      case 'rogue': case 'łotrzyk': case 'lotrzyk': return Math.max(0, ag);
+      case 'mage': case 'czarodziej': {
+        var base = ch.baseEnergy != null ? Number(ch.baseEnergy) : Number(ch.energy);
+        return Math.max(0, isNaN(base) ? 0 : base);
+      }
+      case 'scout': case 'zwiadowca': return Math.max(0, Math.max(Number(ch.strength) || 0, ag));
+      default: return Math.max(0, Number(ch.strength) || 0);
+    }
+  }
+  function getDragonAttackStat(d){ return Math.max(d.strength, d.dexterity); }
+  // Energy cost: Warrior/Mage/Dragon 3, Scout/Rogue 2
+  function getEnergyCost(chOrDragon, isDragon) {
+    if (isDragon) return 3;
+    const cls = (chOrDragon.charClass || '').toLowerCase();
+    const heavy = cls === 'warrior' || cls === 'wojownik' || cls === 'mage' || cls === 'czarodziej';
+    return heavy ? 3 : 2;
+  }
+  // Recovery = base energy, cap so enough for 3 Scout/Rogue attacks or 2 Warrior/Mage (max 6)
+  function getEnergyRecovery(ch) {
+    const base = Number(ch.baseEnergy !== undefined ? ch.baseEnergy : ch.energy) || 0;
+    const cost = getEnergyCost(ch, false);
+    const cap = cost === 2 ? 6 : 6; // 3 Scout/Rogue attacks = 6, 2 Warrior/Mage attacks = 6
+    return Math.min(base, cap);
+  }
+  // Dodge vs dragon – threshold = agility - (dragonAgility - agility) - 8, min 1, max 12
+  function characterDefends(ch, dragonDex){
+    const ag = ch.agility ?? ch.dexterity;
+    let defenseChance = ag - (dragonDex - ag) - 8;
+    if (defenseChance < 1) defenseChance = 1;
+    if (defenseChance > 12) defenseChance = 12;
+    return rollDice() < defenseChance;
+  }
+  async function animateAttack(attackerImg, targetImg){
+    if (battleFastMode) return;
+    if (!attackerImg || !targetImg) return;
+    const dist = 28;
+    const targetRect = targetImg.getBoundingClientRect?.() ?? { top: targetImg.offsetTop };
+    const attackerRect = attackerImg.getBoundingClientRect?.() ?? { top: attackerImg.offsetTop };
+    const dy = targetRect.top - attackerRect.top;
+    attackerImg.style.transition = 'transform 0.2s ease';
+    attackerImg.style.transform = `translateY(${dy > 0 ? dist : -dist}px)`;
+    await new Promise(r=>setTimeout(r, 220));
+    attackerImg.style.transform = 'translateY(0)';
+    await new Promise(r=>setTimeout(r, 220));
+  }
+  function animateShake(el) {
+    if (battleFastMode) return Promise.resolve();
+    if (!el) return Promise.resolve();
+    el.classList.remove('shake-reaction');
+    void el.offsetWidth;
+    el.classList.add('shake-reaction');
+    return new Promise(r => setTimeout(r, 360)).then(function() { el.classList.remove('shake-reaction'); });
+  }
+  function formatDamageText(dmg) {
+    var n = Math.max(0, Math.floor(Number(dmg) || 0));
+    return n === 1 ? '1 point of damage' : n + ' points of damage';
+  }
+  // Battle log – one line, typed character by character; in skip mode full text at once
+  async function setBattleLog(container, text) {
+    if (battleFastMode) { container.textContent = text; return; }
+    container.textContent = '';
+    for (let i = 0; i < text.length; i++) {
+      container.textContent += text[i];
+      await new Promise(r => setTimeout(r, BATTLE_LOG_TYPING_MS));
+    }
+  }
+  function updateDragonHpDisplay() {
+    const el = document.getElementById('dragon-hp-display');
+    if (el) { if (dragonBattle) {
+      const hp = Number(dragonBattle.health);
+      el.textContent = 'Health: ' + (isNaN(hp) ? '-' : Math.max(0, hp));
+    }}
+  }
+  function updateDragonEnergyDisplay() {
+    const el = document.getElementById('dragon-energy-display');
+    if (el) { if (dragonBattle) {
+      const en = Number(dragonBattle.energy);
+      el.textContent = 'Energy: ' + (isNaN(en) ? '-' : Math.max(0, en));
+    }}
+  }
+  
+  // Draw opponent
+  const fightBtn = document.getElementById("fight-btn");
+  fightBtn.disabled = true;
+  
+  document.getElementById("draw-btn").addEventListener("click", async ()=>{
+    const dragonPanel = document.getElementById("dragon-panel");
+    const statsList = document.getElementById("dragon-stats-list");
+    const dragonImgEl = document.getElementById("dragon-img");
+    const buttonsBottom = document.getElementById("buttons-bottom");
+  
+    dragonPanel.style.display='block';
+    buttonsBottom.style.display='flex';
+    fightBtn.disabled = true;
+  
+    statsList.innerHTML='';
+    try {
+      const res = await fetch(DRAGON_API);
+      const data = await res.json();
+      dragon = data;
+      const s = data.stats || {};
+      dragonBattle = {
+        strength: s.Strength ?? s.strength,
+        dexterity: s.Agility ?? s.agility,
+        energy: s.Energy ?? s.energy,
+        health: s.Health ?? s.health
+      };
+      if (data.image ? dragonImgEl : 0) dragonImgEl.src = data.image;
+
+      const statLabels = [['Strength', dragonBattle.strength], ['Agility', dragonBattle.dexterity], ['Energy', dragonBattle.energy], ['Health', dragonBattle.health]];
+      statLabels.forEach(([label, val]) => {
+        const li = document.createElement('li');
+        li.textContent = label + ': ' + (val ?? '-');
+        if (label === 'Energy') li.id = 'dragon-energy-display';
+        if (label === 'Health') li.id = 'dragon-hp-display';
+        if (label === 'Energy' || label === 'Health') li.style.fontWeight = 'bold';
+        statsList.appendChild(li);
+      });
+  
+      fightBtn.disabled = false;
+      const fightNoMusicBtn = document.getElementById("fight-no-music-btn");
+      if (fightNoMusicBtn) fightNoMusicBtn.disabled = false;
+      console.log("Dragon ready for battle:", dragonBattle);
+    } catch(e){
+      console.error("Dragon fetch error:", e);
+      showBattlePopup("Error", "Failed to draw dragon. Try again.");
+    }
+  });
+  
+  function stopBattleMusic() {
+    if (currentBattleMusic) {
+      currentBattleMusic.pause();
+      currentBattleMusic.currentTime = 0;
+      currentBattleMusic = null;
+    }
+  }
+  document.getElementById("mute-music-btn").addEventListener("click", function() {
+    if (!currentBattleMusic) return;
+    currentBattleMusic.muted = !currentBattleMusic.muted;
+    battleMusicOn = !currentBattleMusic.muted;
+    if (currentBattleMusic.muted ? currentAttackAudio : 0) {
+      try { currentAttackAudio.pause(); currentAttackAudio.currentTime = 0; currentAttackAudio = null; } catch(e){}
+    }
+    this.textContent = currentBattleMusic.muted ? "🔊 Unmute" : "🔇 Mute music";
+  });
+  document.getElementById("skip-battle-btn").addEventListener("click", function() { battleFastMode = true; });
+
+  async function startBattle(playMusic) {
+    if (!dragonBattle) {
+      showBattlePopup("Notice", "Draw an opponent first!");
+      return;
+    }
+    const dragonHp = Number(dragonBattle.health);
+    if (isNaN(dragonHp) || dragonHp <= 0) {
+      showBattlePopup("Dragon error", "Dragon has no valid health stat in API response (expected: health).");
+      return;
+    }
+    const fresh = getCharactersFromStorage();
+    if (!fresh.length) {
+      showBattlePopup("No characters", "No characters in team. Add characters in the creator and return here.");
+      return;
+    }
+    const fightBtn = document.getElementById("fight-btn");
+    const fightNoMusicBtn = document.getElementById("fight-no-music-btn");
+    const battleControls = document.getElementById("battle-controls");
+    const muteBtn = document.getElementById("mute-music-btn");
+    fightBtn.disabled = true;
+    if (fightNoMusicBtn) fightNoMusicBtn.disabled = true;
+    battleFastMode = false;
+    battleMusicOn = playMusic;
+    battleEndSoundPlayed = false;
+    try {
+    aliveCharacters = JSON.parse(JSON.stringify(fresh));
+    applyRaceBonuses(aliveCharacters);
+    aliveCharacters.forEach(ch => { ch.baseEnergy = Number(ch.energy) || 0; });
+    renderTeam(aliveCharacters);
+    document.getElementById("buttons-top").style.display = 'none';
+    document.getElementById("buttons-bottom").style.display = 'none';
+    var endOfBattleEl = document.getElementById("end-of-battle-buttons");
+    if (endOfBattleEl) endOfBattleEl.style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const battleLog = document.getElementById("battle-log");
+    battleLog.innerHTML = '';
+    battleLog.style.display = 'block';
+    battleLog.style.color = '#e0ebe7';
+    if (muteBtn) {
+      muteBtn.textContent = "🔇 Mute music";
+      muteBtn.disabled = !playMusic;
+    }
+    const musicCredit = document.getElementById("battle-music-credit");
+    if (playMusic) {
+      if (musicCredit) musicCredit.style.display = 'block';
+      try {
+        currentBattleMusic = new Audio('https://howlingtesters.pl/wp-content/uploads/2026/02/Five-Armies-Kevin-MacLeod.mp3');
+        currentBattleMusic.play();
+      } catch (e) { console.warn('Battle music:', e); }
+    } else {
+      if (musicCredit) musicCredit.style.display = 'none';
+    }
+    let dragonStunned = false;
+  
+    async function runTurn() {
+      // Dragon attacks at most once per round
+      let dragonAttackedThisRound = false;
+      // Scout in party = party attacks first; no Scout = dragon attacks first
+      const partyHasScout = aliveCharacters.some(c => { const ccls = (c.charClass || '').toLowerCase(); return ccls === 'scout' || ccls === 'zwiadowca'; });
+
+      async function doPartyTurn() {
+        if (currentAttackAudio) { try { currentAttackAudio.pause(); currentAttackAudio.currentTime = 0; currentAttackAudio = null; } catch(e){} }
+        const order = aliveCharacters.slice().sort(() => Math.random() - 0.5);
+        const targetImg = document.getElementById("dragon-img");
+        for (const ch of order) {
+          if (dragonBattle.health <= 0) break;
+          const attackerCard = [...document.querySelectorAll('.character-card')].find(c => c.dataset.name === ch.name);
+          const dex = Number(ch.agility ?? ch.dexterity) || 0;
+          const confusedThreshold = dex + 10;
+          const isScoutClass = (() => { const ccls = (ch.charClass || '').toLowerCase(); return ccls === 'scout' || ccls === 'zwiadowca'; })();
+          const confusedRoll = isScoutClass ? Math.min(rollDice(), rollDice()) : rollDice();
+          if (confusedRoll > confusedThreshold) {
+            await setBattleLog(battleLog, `${ch.name} feels confused and skips the turn.`);
+            if (!battleFastMode) await new Promise(r => setTimeout(r, 350));
+            continue;
+          }
+          const energyCost = getEnergyCost(ch, false);
+          let currentEnergy = Number(ch.energy) || 0;
+          if (currentEnergy < energyCost) {
+            const recovery = getEnergyRecovery(ch);
+            ch.energy = currentEnergy + recovery;
+            const energyEl = attackerCard?.querySelector('.energy');
+            if (energyEl) energyEl.textContent = ch.energy;
+            await setBattleLog(battleLog, `${ch.name} skips turn and recovers energy (for 3 attacks).`);
+            if (!battleFastMode) await new Promise(r => setTimeout(r, 350));
+            continue;
+          }
+          var cls = String(ch.charClass || '').toLowerCase().trim();
+          const energyEl = attackerCard?.querySelector('.energy');
+          const attackStat = getCharacterAttackStat(ch);
+          const roll = rollDice();
+          const attackerImg = attackerCard ? attackerCard.querySelector('img') : null;
+          const isWarrior = cls === 'warrior' || cls === 'wojownik';
+          const isScout = cls === 'scout' || cls === 'zwiadowca';
+          const isRogue = cls === 'rogue' || cls === 'łotrzyk' || cls === 'lotrzyk';
+          const isMage = cls === 'mage' || cls === 'czarodziej';
+          // Damage by class: Warrior 3-8, Scout 4-7 (str) or 5 (agi), Rogue 5 / crit 8 (k20 18-20), Mage 2-5
+          let dmg;
+          if (isWarrior) dmg = randomInRange(3, 8);
+          else if (isScout) {
+            const str = Number(ch.strength) || 0, ag = Number(ch.agility ?? ch.dexterity) || 0;
+            dmg = str >= ag ? randomInRange(4, 7) : 5;
+          } else if (isRogue) {
+            const isCrit = (roll >= 18 ? roll <= 20 : 0);
+            dmg = isCrit ? 8 : 5;
+          } else if (isMage) dmg = randomInRange(2, 5);
+          else dmg = randomInRange(3, 5);
+          // Rogue: hit on k20 18-20 (crit) OR k20 < attack stat; others: k20 < attack stat
+          const hit = isRogue ? (roll >= 18 ? roll <= 20 : 0) || (roll < attackStat) : (roll < attackStat);
+          if (hit) {
+            dragonBattle.health -= dmg;
+            if (dragonBattle.health < 0) dragonBattle.health = 0;
+            if (isScout) {
+              dragonBattle.energy = Math.max(0, (Number(dragonBattle.energy) || 0) - 3);
+            }
+            const hitMsg = isRogue ? (dmg === 8 ? ' Critical hit!' : ' Hits.') : ' Hits.';
+            await setBattleLog(battleLog, ch.name + ' attacks the Dragon.' + hitMsg + ' Deals ' + formatDamageText(dmg) + '.');
+            // Mage – stun dragon; threshold = max(1, max(energy/2 - 5, 5))
+            if (isMage) {
+              const stunRoll = rollDice();
+              const energy = currentEnergy;
+              const stunThreshold = Math.max(1, Math.max((energy / 2) - 5, 5));
+              if (stunRoll < stunThreshold) {
+                dragonStunned = true;
+                await setBattleLog(battleLog, `${ch.name} stuns the dragon – dragon's next turn skipped.`);
+              } else {
+                await setBattleLog(battleLog, `${ch.name} attempts stun – fails.`);
+              }
+            }
+          } else {
+            await setBattleLog(battleLog, `${ch.name} attacks the Dragon. Misses.`);
+          }
+          ch.energy = currentEnergy - energyCost;
+          if (energyEl) energyEl.textContent = ch.energy;
+          if (isWarrior) playAttackSound(SOUND_ATTACK_WARRIOR);
+          else if (isRogue) playAttackSound(SOUND_ATTACK_ROGUE);
+          else if (isMage) playAttackSound(SOUND_ATTACK_MAGE);
+          else if (isScout) playAttackSound(SOUND_ATTACK_SCOUT);
+          await animateAttack(attackerImg, targetImg);
+          if (hit) {
+            await animateShake(targetImg);
+            updateDragonHpDisplay();
+            updateDragonEnergyDisplay();
+          }
+          if (!battleFastMode) await new Promise(r => setTimeout(r, 350));
+        }
+      }
+
+      async function doDragonTurn() {
+        // Stunned dragon does not attack this turn
+        if (dragonStunned) {
+          await setBattleLog(battleLog, 'Dragon is stunned and does not attack!');
+          dragonStunned = false;
+          return;
+        }
+        if (dragonAttackedThisRound) return;
+        const dragonImg = document.getElementById('dragon-img');
+        const dragonEnergyCost = getEnergyCost(null, true);
+        let currentDragonEnergy = Number(dragonBattle.energy) || 0;
+        // Dragon recovers energy when skipping turn (rest), +20
+        if (currentDragonEnergy < dragonEnergyCost) {
+          if (aliveCharacters.length > 0) {
+            dragonBattle.energy = currentDragonEnergy + 20;
+            updateDragonEnergyDisplay();
+            await setBattleLog(battleLog, 'Dragon skips turn and recovers 20 energy.');
+            return;
+          }
+        }
+        if (aliveCharacters.length > 0) {
+          if (currentAttackAudio) { try { currentAttackAudio.pause(); currentAttackAudio.currentTime = 0; currentAttackAudio = null; } catch(e){} }
+          const breathRoll = rollDice();
+          const dragonBreathesFire = breathRoll <= 4;
+          dragonAttackedThisRound = true;
+          dragonBattle.energy = currentDragonEnergy - dragonEnergyCost;
+          updateDragonEnergyDisplay();
+          if (dragonBreathesFire) {
+            const fireDmg = randomInRange(3, 5);
+            await setBattleLog(battleLog, 'Dragon breathes fire! Everyone takes ' + formatDamageText(fireDmg) + '.');
+            for (const ch of aliveCharacters.slice()) {
+              ch.health = Math.max(0, (Number(ch.health) || 0) - fireDmg);
+            }
+            const allCards = document.querySelectorAll('.character-card');
+            playAttackSound(SOUND_DRAGON_FIRE_BREATH);
+            for (const card of allCards) await animateShake(card);
+            for (const ch of aliveCharacters.slice()) {
+              const card = [...document.querySelectorAll('.character-card')].find(c => c.dataset.name === ch.name);
+              if (card) {
+                const hpEl = card.querySelector('.hp');
+                if (hpEl) hpEl.textContent = ch.health;
+              }
+            }
+            for (const ch of aliveCharacters.slice()) {
+              if (ch.health <= 0) {
+                const card = [...document.querySelectorAll('.character-card')].find(c => c.dataset.name === ch.name);
+                if (card) card.style.opacity = '0.4';
+              }
+            }
+            aliveCharacters = aliveCharacters.filter(ch => ch.health > 0);
+            if (!battleFastMode) await new Promise(r => setTimeout(r, 350));
+          } else {
+            const ch = aliveCharacters[Math.floor(Math.random() * aliveCharacters.length)];
+            const dStr = dragonBattle.strength || 0;
+            const cStr = ch.strength || 0;
+            let baseDmg = Math.max(dStr - cStr, 0);
+            const isWarrior = (() => { const ccls = (ch.charClass || '').toLowerCase(); return ccls === 'warrior' || ccls === 'wojownik'; })();
+            if (isWarrior) baseDmg = Math.max(baseDmg, Math.floor(dStr * 0.5));
+            if (baseDmg < 5) baseDmg = randomInRange(5, 10);
+            const minDmg = Math.min(Math.floor(baseDmg * 0.75), baseDmg);
+            let dmg = randomInRange(minDmg, baseDmg);
+            const minDmgFromOpponent = Math.floor(cStr / 4) + 2;
+            dmg = Math.max(dmg, minDmgFromOpponent);
+            const targetCard = [...document.querySelectorAll('.character-card')].find(c => c.dataset.name === ch.name);
+            const targetImg = targetCard ? targetCard.querySelector('img') : null;
+            const defended = characterDefends(ch, dragonBattle.dexterity);
+            if (defended) {
+              await setBattleLog(battleLog, `Dragon hit, but ${ch.name} dodges!`);
+            } else {
+              ch.health = Math.max(0, (Number(ch.health) || 0) - dmg);
+              await setBattleLog(battleLog, 'Dragon attacks ' + ch.name + '. Hits. Deals ' + formatDamageText(dmg) + '.');
+            }
+            const hpEl = targetCard ? targetCard.querySelector('.hp') : null;
+            playAttackSound(SOUND_ATTACK_DRAGON);
+            await animateAttack(dragonImg, targetImg);
+            if (!defended) {
+              await animateShake(targetCard);
+              if (hpEl) hpEl.textContent = ch.health;
+            }
+            if (!defended ? ch.health <= 0 : 0) {
+              aliveCharacters = aliveCharacters.filter(c => c.name !== ch.name);
+              if (targetCard) targetCard.style.opacity = '0.4';
+            }
+            if (!battleFastMode) await new Promise(r => setTimeout(r, 350));
+          }
+        }
+      }
+
+      if (partyHasScout) {
+        await doPartyTurn();
+        if (dragonBattle.health <= 0) return;
+        await doDragonTurn();
+      } else {
+        await doDragonTurn();
+        if (dragonBattle.health <= 0) return;
+        await doPartyTurn();
+      }
+    }
+
+    if (battleControls) battleControls.style.display = 'flex';
+    if (muteBtn) muteBtn.style.display = playMusic ? '' : 'none';
+    while (aliveCharacters.length > 0) {
+      if (dragonBattle.health <= 0) break;
+      await runTurn();
+      if (battleFastMode) await new Promise(r => setTimeout(r, 0));
+      else await new Promise(r => setTimeout(r, 600));
+    }
+    stopBattleMusic();
+    if (battleControls) battleControls.style.display = 'none';
+    if (dragonBattle.health <= 0) {
+      const dragonImg = document.getElementById('dragon-img');
+      if (dragonImg) { dragonImg.style.filter = 'grayscale(100%)'; dragonImg.style.opacity = '0.75'; }
+      playBattleSoundOnce(SOUND_VICTORY);
+      var cards = document.querySelectorAll('.character-card');
+      cards.forEach(function(c){ c.classList.add('victory-jump'); });
+      battleLog.style.color = '#00ff00';
+      await setBattleLog(battleLog, 'Victory! Congratulations!');
+      if (!battleFastMode) await new Promise(function(r){ setTimeout(r, 1600); });
+      cards.forEach(function(c){ c.classList.remove('victory-jump'); });
+    } else {
+      playBattleSoundOnce(SOUND_DEFEAT);
+      battleLog.style.color = '#ff0000';
+      await setBattleLog(battleLog, 'Defeat. Better luck next time!');
+      var dragonImgEl = document.getElementById('dragon-img');
+      if (dragonImgEl) dragonImgEl.classList.add('dragon-celebrate');
+      if (!battleFastMode) await new Promise(function(r){ setTimeout(r, 1400); });
+      if (dragonImgEl) dragonImgEl.classList.remove('dragon-celebrate');
+    }
+    const endOfBattleBtns = document.getElementById("end-of-battle-buttons");
+    if (endOfBattleBtns) endOfBattleBtns.style.display = 'flex';
+    } finally {
+      stopBattleMusic();
+      if (battleControls) battleControls.style.display = 'none';
+      fightBtn.disabled = false;
+      if (fightNoMusicBtn) fightNoMusicBtn.disabled = false;
+      if (muteBtn) { muteBtn.disabled = false; muteBtn.style.display = ''; }
+    }
+  }
+  document.getElementById("fight-btn").addEventListener("click", function() { startBattle(true); });
+  document.getElementById("fight-no-music-btn").addEventListener("click", function() { startBattle(false); });
+
+  document.getElementById("back-after-battle-btn").addEventListener("click", function() {
+    window.location.href = "/kreator.html";
+  });
+  document.getElementById("draw-next-opponent-btn").addEventListener("click", async function() {
+    const endOfBattleBtns = document.getElementById("end-of-battle-buttons");
+    const dragonPanel = document.getElementById("dragon-panel");
+    const statsList = document.getElementById("dragon-stats-list");
+    const dragonImgEl = document.getElementById("dragon-img");
+    const buttonsBottom = document.getElementById("buttons-bottom");
+    const battleLog = document.getElementById("battle-log");
+    const musicCredit = document.getElementById("battle-music-credit");
+    if (endOfBattleBtns) endOfBattleBtns.style.display = 'none';
+    if (battleLog) { battleLog.innerHTML = ''; battleLog.style.display = 'none'; }
+    if (musicCredit) musicCredit.style.display = 'none';
+    if (dragonImgEl) { dragonImgEl.style.filter = ''; dragonImgEl.style.opacity = ''; }
+    aliveCharacters = JSON.parse(JSON.stringify(getCharactersFromStorage()));
+    applyRaceBonuses(aliveCharacters);
+    aliveCharacters.forEach(function(ch){ ch.baseEnergy = Number(ch.energy) || 0; });
+    renderTeam(aliveCharacters);
+    dragonPanel.style.display = 'block';
+    statsList.innerHTML = '';
+    try {
+      var res = await fetch(DRAGON_API);
+      var data = await res.json();
+      dragon = data;
+      var s = data.stats || {};
+      dragonBattle = {
+        strength: s.Strength ?? s.strength,
+        dexterity: s.Agility ?? s.agility,
+        energy: s.Energy ?? s.energy,
+        health: s.Health ?? s.health
+      };
+      if (data.image ? dragonImgEl : 0) dragonImgEl.src = data.image;
+      var statLabels = [['Strength', dragonBattle.strength], ['Agility', dragonBattle.dexterity], ['Energy', dragonBattle.energy], ['Health', dragonBattle.health]];
+      statLabels.forEach(function(pair) {
+        var label = pair[0], val = pair[1];
+        var li = document.createElement('li');
+        li.textContent = label + ': ' + (val ?? '-');
+        if (label === 'Energy') li.id = 'dragon-energy-display';
+        if (label === 'Health') li.id = 'dragon-hp-display';
+        if (label === 'Energy' || label === 'Health') li.style.fontWeight = 'bold';
+        statsList.appendChild(li);
+      });
+      buttonsBottom.style.display = 'flex';
+      fightBtn.disabled = false;
+      var fightNoMusicBtn = document.getElementById("fight-no-music-btn");
+      if (fightNoMusicBtn) fightNoMusicBtn.disabled = false;
+    } catch (e) {
+      console.error("Dragon fetch error:", e);
+      showBattlePopup("Error", "Failed to draw dragon. Try again.");
+      if (endOfBattleBtns) endOfBattleBtns.style.display = 'flex';
+    }
+  });
+  </script>
+  

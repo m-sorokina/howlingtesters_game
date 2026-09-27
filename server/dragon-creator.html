@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dragon Creator</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+body {
+    background: #0c1412;
+    font-family: "Poppins", sans-serif;
+    color: #e0ebe7;
+    margin:0; padding:0;
+    min-height:100vh;
+    text-align:left;
+}
+#team-title {
+    width:100%; text-align:center;
+    color:#4fa58a;
+    text-shadow:0 0 25px rgba(79,165,138,0.5);
+    margin:40px 0; font-size:2.8rem; letter-spacing:1px;
+}
+.creator-section {
+    max-width: 500px;
+    margin: 0 auto 30px;
+    background: rgba(10,20,17,0.9);
+    border: 1px solid #263b34;
+    border-radius: 15px;
+    padding: 24px;
+    box-shadow: 0 0 15px rgba(15,30,25,0.6);
+}
+.creator-section h3 {
+    color: #8fffc0;
+    margin: 0 0 16px 0;
+    font-size: 1.2rem;
+}
+.form-row {
+    margin-bottom: 14px;
+}
+.form-row label {
+    display: block;
+    margin-bottom: 4px;
+    color: #a8c4bc;
+    font-size: 0.9rem;
+}
+.form-row input {
+    width: 100%;
+    padding: 10px 12px;
+    background: #0c1412;
+    border: 1px solid #263b34;
+    border-radius: 8px;
+    color: #e0ebe7;
+    font-family: inherit;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+.form-row input:focus {
+    outline: none;
+    border-color: #4fa58a;
+    box-shadow: 0 0 8px rgba(79,165,138,0.3);
+}
+.form-row input[type="number"] {
+    width: 80px;
+}
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+.team-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin: 20px 0;
+}
+button {
+    background: linear-gradient(90deg, #223730, #4fa58a);
+    border: none;
+    color: #e8f7f0;
+    padding: 14px 28px;
+    font-size: 1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: inherit;
+}
+button:hover {
+    background: linear-gradient(90deg, #2e4c43, #6ac3a5);
+    transform: scale(1.05);
+}
+button.secondary {
+    background: linear-gradient(90deg, #1a2a25, #3d6b5a);
+}
+button.secondary:hover {
+    background: linear-gradient(90deg, #243830, #4fa58a);
+}
+.team-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0 40px;
+}
+.character-card {
+    background: rgba(10,20,17,0.9);
+    border: 1px solid #263b34;
+    border-radius: 15px;
+    padding: 18px;
+    width: 240px;
+    color: #dce7e3;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(15,30,25,0.6);
+    transition: 0.4s;
+}
+.character-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 25px rgba(79,165,138,0.3);
+}
+.character-card h4 { color: #8fffc0; margin-bottom: 8px; }
+.character-card ul { text-align: left; padding-left: 20px; }
+.dragon-img {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 1px solid #4fa58a;
+    box-shadow: 0 0 10px rgba(79,165,138,0.3);
+}
+.egg-img {
+    width: 150px;
+    display: block;
+    margin: 20px auto;
+}
+.upload-zone {
+    border: 2px dashed #263b34;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    color: #7a9a8e;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.upload-zone:hover {
+    border-color: #4fa58a;
+    color: #8fffc0;
+}
+.upload-zone input[type="file"] {
+    display: none;
+}
+.error-msg {
+    color: #e07a7a;
+    font-size: 0.9rem;
+    margin-top: 8px;
+}
+#dragon-display-iframe {
+    width: 100%;
+    min-height: 280px;
+    border: 1px solid #263b34;
+    border-radius: 10px;
+    background: #0c1412;
+}
+</style>
+</head>
+<body>
+
+<h1 id="team-title">Dragon Creator</h1>
+
+<div class="creator-section">
+    <h3>Create Dragon (Inputs)</h3>
+    <div class="form-row">
+        <label for="dragon-name">Name</label>
+        <input type="text" id="dragon-name" placeholder="e.g. Ember 123">
+    </div>
+    <div class="form-row">
+        <label for="dragon-image">Image Number (1–4)</label>
+        <input type="number" id="dragon-image" min="1" max="4" value="1">
+    </div>
+    <div class="form-row">
+        <label>Stats</label>
+        <div class="stats-grid">
+            <div>
+                <label for="stat-strength" style="font-size:0.8rem;">Strength</label>
+                <input type="number" id="stat-strength" min="1" max="100" value="30">
+            </div>
+            <div>
+                <label for="stat-agility" style="font-size:0.8rem;">Agility</label>
+                <input type="number" id="stat-agility" min="1" max="100" value="30">
+            </div>
+            <div>
+                <label for="stat-energy" style="font-size:0.8rem;">Energy</label>
+                <input type="number" id="stat-energy" min="1" max="100" value="30">
+            </div>
+            <div>
+                <label for="stat-health" style="font-size:0.8rem;">Health</label>
+                <input type="number" id="stat-health" min="1" max="100" value="60">
+            </div>
+        </div>
+    </div>
+    <div class="team-buttons">
+        <button id="present-btn">✨ Present Dragon</button>
+        <button id="download-btn" class="secondary">📥 Download JSON</button>
+    </div>
+</div>
+
+<div class="creator-section">
+    <h3>Or Load from JSON File</h3>
+    <div class="upload-zone" id="upload-zone">
+        <span>📂 Click or drop JSON file here</span>
+        <input type="file" id="json-file" accept=".json,application/json">
+    </div>
+    <p id="upload-error" class="error-msg" style="display:none;"></p>
+</div>
+
+<div class="creator-section">
+    <h3>Dragon Display</h3>
+    <iframe id="dragon-display-iframe" src="dragon-display.html" title="Dragon display"></iframe>
+</div>
+
+<script>
+function getDragonFromInputs() {
+    const name = document.getElementById('dragon-name').value.trim() || 'Unnamed Dragon';
+    const imageNumber = Math.min(4, Math.max(1, parseInt(document.getElementById('dragon-image').value) || 1));
+    return {
+        name,
+        imageNumber,
+        stats: {
+            Strength: parseInt(document.getElementById('stat-strength').value) || 30,
+            Agility: parseInt(document.getElementById('stat-agility').value) || 30,
+            Energy: parseInt(document.getElementById('stat-energy').value) || 30,
+            Health: parseInt(document.getElementById('stat-health').value) || 60
+        }
+    };
+}
+
+function fillInputsFromDragon(dragon) {
+    document.getElementById('dragon-name').value = dragon.name || '';
+    document.getElementById('dragon-image').value = dragon.imageNumber || 1;
+    if (dragon.stats) {
+        document.getElementById('stat-strength').value = dragon.stats.Strength ?? 30;
+        document.getElementById('stat-agility').value = dragon.stats.Agility ?? 30;
+        document.getElementById('stat-energy').value = dragon.stats.Energy ?? 30;
+        document.getElementById('stat-health').value = dragon.stats.Health ?? 60;
+    }
+}
+
+function renderDragon(dragon) {
+    const iframe = document.getElementById('dragon-display-iframe');
+    if (iframe.contentWindow) {
+        iframe.contentWindow.postMessage({ type: 'dragon', dragon: dragon || null }, '*');
+    }
+}
+
+let currentDragon = null;
+
+function presentDragon() {
+    currentDragon = getDragonFromInputs();
+    renderDragon(currentDragon);
+}
+
+function downloadJson() {
+    const dragon = currentDragon || getDragonFromInputs();
+    const json = JSON.stringify(dragon, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `dragon-${(dragon.name || 'unnamed').replace(/\s+/g, '-').toLowerCase()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+function handleJsonUpload(file) {
+    const errorEl = document.getElementById('upload-error');
+    errorEl.style.display = 'none';
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        try {
+            const data = JSON.parse(e.target.result);
+            const dragon = Array.isArray(data) ? data[0] : data;
+            if (!dragon || (typeof dragon !== 'object')) {
+                throw new Error('Invalid dragon data');
+            }
+            currentDragon = {
+                name: dragon.name,
+                imageNumber: dragon.imageNumber ?? 1,
+                stats: dragon.stats || { Strength: 30, Agility: 30, Energy: 30, Health: 60 }
+            };
+            fillInputsFromDragon(currentDragon);
+            renderDragon(currentDragon);
+        } catch (err) {
+            errorEl.textContent = 'Invalid JSON or dragon format: ' + err.message;
+            errorEl.style.display = 'block';
+        }
+    };
+    reader.readAsText(file);
+}
+
+document.getElementById('present-btn').onclick = presentDragon;
+document.getElementById('download-btn').onclick = downloadJson;
+
+const uploadZone = document.getElementById('upload-zone');
+const fileInput = document.getElementById('json-file');
+
+uploadZone.onclick = () => fileInput.click();
+
+uploadZone.ondragover = (e) => {
+    e.preventDefault();
+    uploadZone.style.borderColor = '#4fa58a';
+};
+uploadZone.ondragleave = () => {
+    uploadZone.style.borderColor = '#263b34';
+};
+uploadZone.ondrop = (e) => {
+    e.preventDefault();
+    uploadZone.style.borderColor = '#263b34';
+    const file = e.dataTransfer.files[0];
+    if (file && (file.name.endsWith('.json') || file.type === 'application/json')) {
+        handleJsonUpload(file);
+    } else {
+        document.getElementById('upload-error').textContent = 'Please drop a JSON file.';
+        document.getElementById('upload-error').style.display = 'block';
+    }
+};
+
+fileInput.onchange = (e) => {
+    const file = e.target.files[0];
+    if (file) handleJsonUpload(file);
+    e.target.value = '';
+};
+
+document.getElementById('dragon-display-iframe').onload = () => {
+    renderDragon(currentDragon);
+};
+
+// Initial empty state
+renderDragon(null);
+</script>
+
+</body>
+</html>

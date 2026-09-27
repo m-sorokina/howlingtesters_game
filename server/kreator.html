@@ -1,0 +1,509 @@
+<section class="team-header">
+  <h1>Create your team</h1>
+  <p>Choose names, races and classes to create your legendary party of four.</p>
+</section><!-- CHARACTER CREATOR -->
+  <div id="character-creator" class="character-container">
+  <h2>Create your character</h2>
+  <label for="name">Character name:</label>
+  <input id="name" required="" type="text" placeholder="Enter name..." />
+  
+  <label for="race">Race:</label>
+  <select id="race">
+  <option value="Human">Human</option>
+  <option value="Elf">Elf</option>
+  <option value="Dwarf">Dwarf</option>
+  <option value="Orc">Orc</option>
+  </select>
+  <h3>Choose class:</h3>
+  <div class="class-select">
+  <div class="class-option" data-class="Warrior" data-img="https://howlingtesters.pl/wp-content/uploads/2025/10/3.png">
+  
+  <img src="https://howlingtesters.pl/wp-content/uploads/2025/10/3.png" alt="Warrior" />Warrior
+  
+  </div>
+  <div class="class-option" data-class="Rogue" data-img="https://howlingtesters.pl/wp-content/uploads/2025/10/4.png">
+  
+  <img src="https://howlingtesters.pl/wp-content/uploads/2025/10/4.png" alt="Rogue" />Rogue
+  
+  </div>
+  <div class="class-option" data-class="Mage" data-img="https://howlingtesters.pl/wp-content/uploads/2025/10/1.png">
+  
+  <img src="https://howlingtesters.pl/wp-content/uploads/2025/10/1.png" alt="Mage" />Mage
+  
+  </div>
+  <div class="class-option" data-class="Scout" data-img="https://howlingtesters.pl/wp-content/uploads/2025/10/2.png">
+  
+  <img src="https://howlingtesters.pl/wp-content/uploads/2025/10/2.png" alt="Scout" />Scout
+  
+  </div>
+  </div>
+  <h3>Character stats</h3>
+  <div class="stats">
+  <h2>Points to spend: <span id="points-left">15</span></h2>
+  <label>Strength: <input id="strength" max="20" min="1" type="number" value="10" /></label>
+  <label>Agility: <input id="agility" max="20" min="1" type="number" value="10" /></label>
+  <label>Energy: <input id="energy" max="20" min="1" type="number" value="10" /></label>
+  <label>Health: <input id="health" max="20" min="1" type="number" value="10" /></label>
+  
+  </div>
+  <button id="generate-btn">Add character</button>
+  </div>
+  <!-- CHARACTER LIST -->
+  <div id="character-list" class="character-list">
+  <h2 id="character-list-title">Your characters</h2>
+  <div id="character-cards" class="character-cards"></div>
+  <div class="fight-button">
+  <button id="go-to-fight" type="button">⚔️ Go to battle</button>
+  </div>
+  </div>
+  <!-- UNIVERSAL POPUP -->
+  <div id="popup" class="popup">
+  <div class="popup-content">
+  <h3 id="popup-title">Message</h3>
+  <p id="popup-message"></p>
+  <button id="popup-close">Close</button>
+  </div>
+  </div>
+  <style>
+  /* ======= GLOBAL STYLES ======= */
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #d4e4df;
+  margin: 0;
+  background: linear-gradient(135deg, #000000 0%, #002923 100%);
+    background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: bottom right;
+}
+  /* ======= MAIN HEADER ======= */
+.team-header {
+  text-align: center;
+  padding: 40px 20px 10px;
+  background: rgba(0, 20, 15, 0.85);
+  box-shadow: 0 0 30px rgba(20, 40, 30, 0.6);
+  border-bottom: 1px solid #263b34;
+}
+.team-header h1 {
+  font-size: 2.5rem;
+  color: #4fa58a;
+  text-shadow: 0 0 15px rgba(79,165,138,0.3);
+  margin-bottom: 10px;
+}
+.team-header p {
+  font-size: 1.1rem;
+  color: #9eb7ae;
+}
+  /* ======= CREATOR ======= */
+.character-container {
+  background: rgba(10, 20, 17, 0.9);
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 650px;
+  margin: 40px auto;
+  color: #d4e4df;
+  text-align: center;
+  border: 1px solid #263b34;
+  box-shadow: 0 0 30px rgba(10, 40, 30, 0.3);
+}
+.character-container h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #4fa58a;
+  text-shadow: 0 0 10px rgba(79,165,138,0.3);
+}
+label, select, input {
+  display: block;
+  margin: 10px auto;
+  width: 80%;
+}
+input, select {
+  background: #0d1c18;
+  color: #d4e4df;
+  border: 1px solid #263b34;
+  border-radius: 8px;
+  padding: 8px;
+}
+input:focus, select:focus {
+  outline: none;
+  border-color: #4fa58a;
+  box-shadow: 0 0 8px rgba(79,165,138,0.3);
+}
+  /* ======= CLASS SELECT ======= */
+.class-select {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+  .class-option {
+  cursor: pointer;
+  background: rgba(15, 25, 22, 0.8);
+  border: 1px solid #263b34;
+  border-radius: 15px;
+  padding: 15px 10px;
+  width: 130px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  transition: 0.3s;
+  text-align: center;
+  overflow: hidden;
+}
+.class-option:hover {
+  border-color: #4fa58a;
+  box-shadow: 0 0 15px rgba(79,165,138,0.3);
+  transform: scale(1.05);
+}
+.class-option.selected {
+  border-color: #4fa58a;
+  box-shadow: 0 0 20px rgba(79,165,138,0.4);
+}
+.class-option img {
+  width: 64px;
+  height: 64px;
+}
+.class-option p {
+  color: #d4e4df;
+  font-size: 1rem;
+  margin: 5px 0 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+}
+  /* ======= BUTTONS ======= */
+button {
+  background: linear-gradient(90deg, #223730, #4fa58a);
+  border: none;
+  color: #e8f7f0;
+  padding: 10px 25px;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 10px rgba(79,165,138,0.25);
+}
+button:hover {
+  background: linear-gradient(90deg, #2e4c43, #6ac3a5);
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(79,165,138,0.35);
+  transform: scale(1.05);
+}
+  .fight-button { margin-top: 24px; text-align: center; }
+  /* ======= CHARACTER LIST ======= */
+.character-list {
+  max-width: 650px;              /* same width as creator */
+  margin: 40px auto;
+  text-align: center;
+}
+.character-list h2 {
+  color: #4fa58a;
+  text-shadow: 0 0 10px rgba(79,165,138,0.3);
+  margin-bottom: 20px;
+}
+  /* Container - vertical layout */
+.character-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: stretch;
+}
+  .character-card {
+  background: rgba(10, 20, 17, 0.9);
+  border: 1px solid #263b34;
+  border-radius: 15px;
+  padding: 15px 20px;
+  color: #d4e4df;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 0 15px rgba(15,30,25,0.6);
+  transition: 0.4s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInCard 0.6s forwards;
+  min-height: 150px;
+}
+  .character-card img {
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+  .character-card .info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 5px;
+}
+  .character-card h4 {
+  color: #4fa58a;
+  margin: 0 0 5px 0;
+  font-size: 1.1rem;
+  min-height: 1.3em;
+  line-height: 1.3em;
+  word-break: break-word;
+}
+  .character-card p {
+  margin: 3px 0;
+  font-size: 0.95rem;
+  color: #cde0d9;
+  min-height: 1.2em;
+}
+  .character-card ul.stats-list {
+  align-items: center;
+  padding-left: 20px;
+  margin: 5px 0 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style-type: none;
+}
+  .character-card ul.stats-list li {
+  font-size: 0.9rem;
+  flex: 1 1 45%;
+}
+  .character-card button {
+  background: linear-gradient(90deg, #223730, #4fa58a);
+  align-items: center;
+  border: none;
+  color: #e8f7f0;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+  .character-card button:hover {
+  background: linear-gradient(90deg, #2e4c43, #6ac3a5);
+  box-shadow: 0 0 15px rgba(79,165,138,0.35);
+}
+  .character-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #4fa58a;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+  .character-card .info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
+}
+  .character-card .details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+  /* Fade-in animation */
+@keyframes fadeInCard {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+  /* ======= POPUP ======= */
+.popup {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.75);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.popup-content {
+  background: rgba(10, 20, 17, 0.95);
+  color: #d4e4df;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 400px;
+  box-shadow: 0 0 20px rgba(79,165,138,0.3);
+  border: 1px solid #263b34;
+}</style>
+  
+  <script>
+  const classOptions = document.querySelectorAll(".class-option");
+  const characterCardsContainer = document.getElementById("character-cards");
+  const popup = document.getElementById("popup");
+  const popupTitle = document.getElementById("popup-title");
+  const popupMessage = document.getElementById("popup-message");
+  const popupClose = document.getElementById("popup-close");
+  
+  function showPopup(title, message) {
+    popupTitle.textContent = title;
+    popupMessage.textContent = message;
+    popup.style.display = "flex";
+  }
+  
+  popupClose.addEventListener("click", () => {
+    popup.style.display = "none";
+  });
+  
+  
+  let characters = JSON.parse(localStorage.getItem("characters")) || [];
+  
+  classOptions.forEach(opt => {
+    opt.addEventListener("click", () => {
+      classOptions.forEach(o => o.classList.remove("selected"));
+      opt.classList.add("selected");
+    });
+  });
+  
+  document.getElementById("generate-btn").addEventListener("click", () => {
+  if (characters.length >= 4) {
+    showPopup("Character limit", "You can have at most 4 characters. Remove one to add a new one.");
+    return;
+  }
+  
+  updatePoints();
+  if (pointsLeft < 0) {
+    showPopup("Stats too high", "You spent too many points on stats. Lower them so points to spend are non-negative (e.g. 0).");
+    return;
+  }
+  if (pointsLeft > 0) {
+    showPopup("Points remaining", `Cannot create character. ${pointsLeft} points left to assign!`);
+    return;
+  }
+  
+    let name = document.getElementById("name").value.trim() || "Unnamed";
+  
+    const nameExists = characters.some(ch => ch.name.toLowerCase() === name.toLowerCase());
+  if (nameExists) {
+    showPopup("Duplicate name", "A character with this name already exists! Choose another name.");
+    return;
+  }
+  
+    const race = document.getElementById("race").value;
+    const selectedClass = document.querySelector(".class-option.selected");
+  if (!selectedClass) {
+    showPopup("No class", "Choose a character class!");
+    return;
+  }
+  
+    const charClass = selectedClass.dataset.class;
+    const imgSrc = selectedClass.dataset.img;
+    const strength = getStatValue(document.getElementById("strength"));
+    const agility = getStatValue(document.getElementById("agility"));
+    const energy = getStatValue(document.getElementById("energy"));
+    const health = getStatValue(document.getElementById("health"));
+  
+    const newCharacter = { name, race, charClass, imgSrc, strength, agility, energy, health };
+    characters.push(newCharacter);
+    saveCharacters();
+    renderCharacters();
+  
+    // Clear name field
+    document.getElementById("name").value = "";
+  
+    // Clear class selection
+    classOptions.forEach(o => o.classList.remove("selected"));
+  
+    // Reset points counter
+    pointsLeft = maxPoints;
+    pointsDisplay.textContent = pointsLeft;
+  
+    // Reset stat values to default 10
+    statInputs.forEach(i => i.value = 10);
+  });
+  
+  popupClose.addEventListener("click", () => {
+    popup.style.display = "none";
+  });
+  
+  function saveCharacters() {
+    localStorage.setItem("characters", JSON.stringify(characters));
+  }
+  
+  function renderCharacters() {
+    characterCardsContainer.innerHTML = "";
+    const characterListTitle = document.getElementById("character-list-title");
+    if (characters.length === 0) {
+      characterListTitle.style.display = "none";
+      return;
+    } else {
+      characterListTitle.style.display = "block";
+    }
+    characters.forEach((ch, index) => {
+      const card = document.createElement("div");
+      card.classList.add("character-card");
+      card.style.animationDelay = `${index * 0.1}s`;
+     card.innerHTML = `
+    <img src="${ch.imgSrc}" alt="${ch.charClass}">
+    <div class="info">
+      <div class="details">
+        <h4 class="character-name">${ch.name}</h4>
+        <p>Race: ${ch.race}</p>
+        <p>Class: ${ch.charClass}</p>
+        <ul class="stats-list">
+          <li>Strength: ${ch.strength}</li>
+          <li>Agility: ${ch.agility ?? ch.dexterity}</li>
+          <li>Energy: ${ch.energy}</li>
+          <li>Health: ${ch.health}</li>
+        </ul>
+      </div>
+    </div>
+    <button type="button" onclick="removeCharacter(${index})">Remove</button>
+    `;
+      characterCardsContainer.appendChild(card);
+    });
+  }
+  
+  
+  function removeCharacter(index) {
+    characters.splice(index, 1);
+    saveCharacters();
+    renderCharacters();
+  }
+  
+  document.addEventListener("DOMContentLoaded", renderCharacters);
+  document.getElementById("go-to-fight").addEventListener("click", function() {
+    window.location.href = "/walka.html";
+  });
+
+  let maxPoints = 15;
+  let pointsLeft = maxPoints;
+  
+  const statInputs = ["strength", "agility", "energy", "health"].map(id => document.getElementById(id));
+  const pointsDisplay = document.getElementById("points-left");
+  
+  function getStatValue(input) {
+    const val = parseInt(input.value, 10);
+    return Number.isNaN(val) ? 0 : val;
+  }
+  
+  function updatePoints() {
+    const usedPoints = statInputs.reduce((sum, input) => sum + (getStatValue(input) - 10), 0);
+    pointsLeft = maxPoints - usedPoints;
+    pointsDisplay.textContent = pointsLeft;
+  }
+  
+  statInputs.forEach(input => {
+    input.addEventListener("input", () => {
+      let val = getStatValue(input);
+      if (input.value !== "" ? input.value !== "-" : 0) {
+        if (val < 1) input.value = 1;
+        if (val > 20) input.value = 20;
+      }
+      const usedPoints = statInputs.reduce((sum, i) => sum + (getStatValue(i) - 10), 0);
+      pointsLeft = maxPoints - usedPoints;
+      pointsDisplay.textContent = pointsLeft;
+    });
+  });
+  </script>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Baby Dragon Lair</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+body {
+    background: #0c1412;
+    font-family: "Poppins", sans-serif;
+    color: #e0ebe7;
+    margin:0; padding:0;
+    min-height:100vh;
+    text-align:left;
+}
+#team-title {
+    width:100%; text-align:center;
+    color:#4fa58a;
+    text-shadow:0 0 25px rgba(79,165,138,0.5);
+    margin:40px 0; font-size:2.8rem; letter-spacing:1px;
+}
+.team-container {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:25px;
+    margin-bottom:40px;
+    align-items:center;
+}
+.character-card {
+    background:rgba(10,20,17,0.9);
+    border:1px solid #263b34;
+    border-radius:15px;
+    padding:18px;
+    width:240px;
+    color:#dce7e3;
+    text-align:center;
+    box-shadow:0 0 15px rgba(15,30,25,0.6);
+    transition:0.4s;
+}
+.character-card:hover {
+    transform:scale(1.03);
+    box-shadow:0 0 25px rgba(79,165,138,0.3);
+}
+.character-card h4 { color:#8fffc0; margin-bottom:8px; }
+.character-card ul { text-align:left; padding-left:20px; }
+.team-buttons {
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    margin-bottom:20px;
+}
+button {
+    background: linear-gradient(90deg, #223730, #4fa58a);
+    border:none;
+    color:#e8f7f0;
+    padding:14px 36px;
+    font-size:1.1rem;
+    border-radius:12px;
+    cursor:pointer;
+    transition:0.3s;
+}
+button:hover {
+    background: linear-gradient(90deg, #2e4c43, #6ac3a5);
+    transform:scale(1.07);
+}
+#no-dragons-msg { font-size:1.2rem; text-align:center; }
+.dragon-img {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 10px;
+    border-radius:10px;
+    border:1px solid #4fa58a;
+    box-shadow:0 0 10px rgba(79,165,138,0.3);
+}
+.egg-img {
+    width: 150px;
+    display: block;
+    margin: 20px auto;
+}
+</style>
+</head>
+<body>
+
+<h1 id="team-title">Baby Dragon Lair</h1>
+
+<div id="baby-dragon-container" class="team-container"></div>
+<p id="no-dragons-msg" style="display:none;">There are no dragons yet!</p>
+
+<div class="team-buttons">
+    <button id="add-dragon-btn">🎲 Add Dragon</button>
+    <button id="remove-dragon-btn">🗑 Remove Dragon</button>
+    <button id="update-dragon-btn">⚡ Update Dragon</button>
+    <button id="refresh-dragons-btn">🔄 Refresh List</button>
+</div>
+
+<script>
+const API = "http://localhost:3000/baby-dragon-api/v1/dragons";
+const EGG_IMAGE = "https://howlingtesters.pl/wp-content/uploads/2026/02/NF117wvxSHi7surSvPbtyg.jpg";
+
+// Dragon images 1–4
+function getDragonImageURL(number) {
+    return `https://howlingtesters.pl/wp-content/uploads/2026/02/dragon${number}baby.jpg`;
+}
+
+function ordinal(n) { return ['first','second','third','fourth'][n-1] || n; }
+function randomStat(min,max) { return Math.floor(Math.random()*(max-min+1))+min; }
+function randomName() {
+    const names = ["Ember","Flare","Spike","Blaze","Nova","Drako"];
+    return names[Math.floor(Math.random()*names.length)] + " " + Math.floor(Math.random()*999);
+}
+
+async function getDragons() {
+    const res = await fetch(API);
+    return res.json();
+}
+
+async function renderDragons() {
+    const dragons = await getDragons();
+    const container = document.getElementById('baby-dragon-container');
+    const noMsg = document.getElementById('no-dragons-msg');
+    container.innerHTML = '';
+
+    if (!dragons.length) {
+        noMsg.style.display = 'block';
+        const egg = document.createElement('img');
+        egg.src = EGG_IMAGE;
+        egg.classList.add('egg-img');
+        container.appendChild(egg);
+        return;
+    }
+
+    noMsg.style.display = 'none';
+
+    dragons.forEach((dr, idx) => {
+        const card = document.createElement('div');
+        card.classList.add('character-card');
+
+        card.innerHTML = `
+            <img src="${getDragonImageURL(dr.imageNumber)}" class="dragon-img" />
+            <h4>${dr.name} - ${ordinal(idx+1)}</h4>
+            <ul>
+                <li>Strength: ${dr.stats.Strength}</li>
+                <li>Agility: ${dr.stats.Agility}</li>
+                <li>Energy: ${dr.stats.Energy}</li>
+                <li>Health: ${dr.stats.Health}</li>
+            </ul>
+        `;
+        container.appendChild(card);
+    });
+}
+
+async function addDragon() {
+    const dragonData = {
+        name: randomName(),
+        imageNumber: Math.floor(Math.random()*4)+1,
+        stats: {
+            Strength: randomStat(20,40),
+            Agility: randomStat(20,40),
+            Energy: randomStat(20,40),
+            Health: randomStat(40,80)
+        }
+    };
+    await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(dragonData) });
+    renderDragons();
+}
+
+async function removeFirstDragon() {
+    const dragons = await getDragons();
+    if (!dragons.length) return;
+    await fetch(`${API}/${dragons[0].id}`, { method:'DELETE' });
+    renderDragons();
+}
+
+async function updateFirstDragon() {
+    const dragons = await getDragons();
+    if (!dragons.length) return;
+    const dragonData = {
+        name: randomName(),
+        imageNumber: Math.floor(Math.random()*4)+1,
+        stats: {
+            Strength: randomStat(20,40),
+            Agility: randomStat(20,40),
+            Energy: randomStat(20,40),
+            Health: randomStat(40,80)
+        }
+    };
+    await fetch(`${API}/${dragons[0].id}`, { method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify(dragonData) });
+    renderDragons();
+}
+
+document.getElementById('add-dragon-btn').onclick = addDragon;
+document.getElementById('remove-dragon-btn').onclick = removeFirstDragon;
+document.getElementById('update-dragon-btn').onclick = updateFirstDragon;
+document.getElementById('refresh-dragons-btn').onclick = renderDragons;
+
+renderDragons();
+</script>
+
+</body>
+</html>

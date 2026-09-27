@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dragon Display</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    background: #0c1412;
+    font-family: "Poppins", sans-serif;
+    color: #e0ebe7;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.character-card {
+    background: rgba(10,20,17,0.9);
+    border: 1px solid #263b34;
+    border-radius: 15px;
+    padding: 18px;
+    width: 240px;
+    color: #dce7e3;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(15,30,25,0.6);
+    transition: 0.4s;
+}
+.character-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 25px rgba(79,165,138,0.3);
+}
+.character-card h4 { color: #8fffc0; margin-bottom: 8px; }
+.character-card ul { text-align: left; padding-left: 20px; }
+.dragon-img {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 1px solid #4fa58a;
+    box-shadow: 0 0 10px rgba(79,165,138,0.3);
+}
+.egg-img {
+    width: 150px;
+    display: block;
+    margin: 0 auto;
+}
+.placeholder {
+    color: #7a9a8e;
+    font-size: 1rem;
+    text-align: center;
+}
+</style>
+</head>
+<body>
+<div id="content">
+    <p class="placeholder">Create a dragon and click Present.</p>
+</div>
+<script>
+const EGG_IMAGE = "https://howlingtesters.pl/wp-content/uploads/2026/02/NF117wvxSHi7surSvPbtyg.jpg";
+
+function getDragonImageURL(number) {
+    return `https://howlingtesters.pl/wp-content/uploads/2026/02/dragon${number}baby.jpg`;
+}
+
+function render(dragon) {
+    const content = document.getElementById('content');
+    if (!dragon) {
+        content.innerHTML = '<img src="' + EGG_IMAGE + '" class="egg-img" alt="Egg" /><p class="placeholder">Create a dragon and click Present.</p>';
+        return;
+    }
+    const imgNum = Math.min(4, Math.max(1, dragon.imageNumber || 1));
+    content.innerHTML = '<div class="character-card">' +
+        '<img src="' + getDragonImageURL(imgNum) + '" class="dragon-img" alt="Dragon" />' +
+        '<h4>' + (dragon.name || 'Unnamed') + '</h4>' +
+        '<ul>' +
+        '<li>Strength: ' + (dragon.stats?.Strength ?? 0) + '</li>' +
+        '<li>Agility: ' + (dragon.stats?.Agility ?? 0) + '</li>' +
+        '<li>Energy: ' + (dragon.stats?.Energy ?? 0) + '</li>' +
+        '<li>Health: ' + (dragon.stats?.Health ?? 0) + '</li>' +
+        '</ul></div>';
+}
+
+window.addEventListener('message', (e) => {
+    if (e.data && e.data.type === 'dragon') {
+        render(e.data.dragon);
+    }
+});
+
+// Support loading from hash (e.g. ?dragon=base64json)
+const params = new URLSearchParams(window.location.search);
+const dragonParam = params.get('dragon');
+if (dragonParam) {
+    try {
+        const dragon = JSON.parse(atob(dragonParam));
+        render(dragon);
+    } catch (_) {}
+}
+</script>
+</body>
+</html>
