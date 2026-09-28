@@ -2,7 +2,12 @@ export { assertCharacterCardDetails, assertCharacterCard, assertCharacterCardQua
 
 export { assertStatPointsToSpend, assertTotalDistributedPoints } from './distribution-points.assertions';
 
-export { assertDragonCard, assertDragonCardDetails, assertDragonHasNoStats } from './dragon.assertions';
+export {
+  assertDragonCard,
+  assertDragonCardDetails,
+  assertDragonHasNoStats,
+  assertDragonStatsAreDifferent,
+} from './dragon.assertions';
 
 export { assertErrorPopupContent } from './popup.assertions';
 

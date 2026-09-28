@@ -1,6 +1,7 @@
 import { DragonComponent } from '@components';
 import { assertElementVisibility, assertImageVisibility } from './general.assertions';
 import type { Dragon } from '@models';
+import type { Stats } from '@types';
 import { STAT_KEYS } from '@consts';
 import { expect } from '@fixtures';
 
@@ -19,4 +20,8 @@ export function assertDragonCardDetails(dragon: Dragon) {
 
 export async function assertDragonHasNoStats(dragon: DragonComponent): Promise<void> {
   await expect(dragon.stats, 'Dragon should have no stats before a draw').toHaveCount(0);
+}
+
+export function assertDragonStatsAreDifferent(previousStats: Stats, currentStats: Stats): void {
+  expect.soft(currentStats, 'A newly drawn dragon should not repeat the previous stats').not.toEqual(previousStats);
 }

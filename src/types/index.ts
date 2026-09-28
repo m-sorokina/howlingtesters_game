@@ -3,9 +3,9 @@ export type {
   PartyGeneral,
   CreateCharacterForm,
   CharacterList,
-  ErrorMessages,
-  ErrorMessage,
+  PartyErrorMessages,
+  FightErrorMessages,
   DragonCard,
   FightGeneral,
 } from './text-page.type';
-export type { State } from './general.type';
+export type { State, PopupMessage } from './general.type';

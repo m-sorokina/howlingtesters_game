@@ -25,6 +25,7 @@ export class DragonComponent {
   }
 
   async getDetails(): Promise<Dragon> {
+    await this.stats.first().waitFor();
     const statsList = (await this.stats.allTextContents())!;
     const stats = getStatsDetails(statsList);
     return new Dragon(stats);

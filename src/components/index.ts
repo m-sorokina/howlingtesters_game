@@ -5,3 +5,4 @@ export { CharacterList } from './character-list.component';
 export { BattleTeam } from './battle-team.component';
 export { BattleControls } from './battle-controls.component';
 export { DragonComponent } from './dragon.component';
+export { BattlePopupComponent } from './battle-popup.component';

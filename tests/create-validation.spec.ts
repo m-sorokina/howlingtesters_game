@@ -18,10 +18,7 @@ test.describe('Create Character form validation warnings', () => {
     const character = createRandomCharacter();
     await createPage.createCharacter(character);
 
-    await assertErrorPopupContent(
-      createPage.messagePopup,
-      content.errorMessages.find((e) => e.type === 'maxCharacters')!,
-    );
+    await assertErrorPopupContent(createPage.messagePopup, content.partyErrorMessages.maxCharacters);
 
     await createPage.messagePopup.closeButton.click();
 
@@ -41,10 +38,7 @@ test.describe('Create Character form validation warnings', () => {
 
     await createPage.createCharacter(character2);
 
-    await assertErrorPopupContent(
-      createPage.messagePopup,
-      content.errorMessages.find((e) => e.type === 'duplicateName')!,
-    );
+    await assertErrorPopupContent(createPage.messagePopup, content.partyErrorMessages.duplicateName);
 
     await createPage.messagePopup.closeButton.click();
 
@@ -57,10 +51,7 @@ test.describe('Create Character form validation warnings', () => {
     await createPage.createCharacterForm.fillCharacter(character, { addStats: false });
     await createPage.createCharacterForm.addCharacterButton.click();
 
-    await assertErrorPopupContent(
-      createPage.messagePopup,
-      content.errorMessages.find((e) => e.type === 'pointsRemaining')!,
-    );
+    await assertErrorPopupContent(createPage.messagePopup, content.partyErrorMessages.pointsRemaining);
 
     await createPage.messagePopup.closeButton.click();
 
@@ -73,10 +64,7 @@ test.describe('Create Character form validation warnings', () => {
     await createPage.createCharacterForm.fillCharacter(character, { addClass: false, addStats: true });
     await createPage.createCharacterForm.addCharacterButton.click();
 
-    await assertErrorPopupContent(
-      createPage.messagePopup,
-      content.errorMessages.find((e) => e.type === 'classRequired')!,
-    );
+    await assertErrorPopupContent(createPage.messagePopup, content.partyErrorMessages.classRequired);
 
     await createPage.messagePopup.closeButton.click();
 
