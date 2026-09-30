@@ -1,0 +1,10 @@
+{
+  "dragonCard": {
+    "stats": {
+      "strength": "Strength:",
+      "agility": "Agility:",
+      "energy": "Energy:",
+      "health": "Health:"
+    }
+  }
+}

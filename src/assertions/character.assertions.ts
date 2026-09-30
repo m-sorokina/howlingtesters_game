@@ -2,7 +2,7 @@ import type { Locator } from '@playwright/test';
 import { expect } from '@fixtures';
 import type { Character } from '@models';
 import type { CharacterComponent } from '@components';
-import { assertElementVisibility, assertImageVisibility } from './general.assertions';
+import { assertElementVisibility, assertImageVisibility, assertElementsQuantity } from './general.assertions';
 
 export async function assertCharacterCard(character: Character, createdCharacter: CharacterComponent) {
   await assertElementVisibility(createdCharacter.name);
@@ -14,12 +14,6 @@ export function assertCharacterCardDetails(expectedCharacter: Character, actualC
   expect.soft(actualCharacter, 'Created character details should be equal to').toEqual(expectedCharacter);
 }
 
-export async function assertCharacterCardQuantity(
-  createdCharacterCards: Locator,
-  expectedQuantity: number,
-): Promise<void> {
-  await expect(
-    createdCharacterCards,
-    `There should be exactly ${expectedQuantity} created character card(s)`,
-  ).toHaveCount(expectedQuantity);
+export async function assertCharacterCardQuantity(expectedElementCards: Locator, expectedQuantity: number) {
+  await assertElementsQuantity(expectedElementCards, expectedQuantity, 'character cards');
 }

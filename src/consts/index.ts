@@ -7,5 +7,7 @@ export {
   RACES,
   CLASSES,
   STAT_KEYS,
+  RACE_STAT_BONUS,
+  MAX_BATTLE_DURATION,
 } from './const';
 export { routes } from './routes';

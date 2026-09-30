@@ -24,3 +24,14 @@ export async function assertImageVisibility(image: Locator, alt?: string) {
     .poll(() => image.evaluate((img: HTMLImageElement) => img.naturalWidth), 'Image should be loaded')
     .toBeGreaterThan(0);
 }
+
+export async function assertElementsQuantity(
+  expectedElementCards: Locator,
+  expectedQuantity: number,
+  elementName: string,
+): Promise<void> {
+  await expect(
+    expectedElementCards,
+    `There should be exactly ${expectedQuantity} expected element(s) of ${elementName}`,
+  ).toHaveCount(expectedQuantity);
+}

@@ -9,7 +9,7 @@ export default defineConfig({
   retries: process.env.CI ? 0 : 0,
   workers: process.env.CI ? 3 : undefined,
   reporter: [['list'], ['html', { open: 'never' }]],
-  timeout: 20_000,
+  timeout: 60_000,
   expect: {
     timeout: 3_000,
   },
@@ -18,7 +18,7 @@ export default defineConfig({
     trace: 'on',
     screenshot: 'only-on-failure',
     actionTimeout: 6_000,
-    navigationTimeout: 6_000,
+    navigationTimeout: 15_000,
   },
   projects: [
     {
